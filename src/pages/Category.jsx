@@ -42,8 +42,7 @@ const Category = () => {
     CategoryServices.getAllCategories
   );
 
-  const { handleDeleteMany, allId, handleUpdateMany, serviceId } =
-    useToggleDrawer();
+  const { handleDeleteMany, allId, handleUpdateMany, serviceId } =  useToggleDrawer();
 
   const { t } = useTranslation();
 

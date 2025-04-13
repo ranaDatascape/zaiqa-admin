@@ -8,7 +8,7 @@ import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import DrawerButton from "../form/button/DrawerButton";
 
-const AboutUsDrawer = () => {
+const AboutUsDrawer = ({refetch}) => {
   const {
     register,
     handleSubmit,
@@ -81,7 +81,7 @@ const AboutUsDrawer = () => {
         closeDrawer();
         setFiles({ signatureImage: null, mainImage: null, secondaryImage: null });
         setPreviews({ signatureImage: null, mainImage: null, secondaryImage: null });
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
       console.error("About Us creation failed:", error);

@@ -11,7 +11,7 @@ import React, { useContext, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const DailyDeals = () => {
-  const [data, isLoading] = useGetDatas("/daily-deals", "daily-deals");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/daily-deals", "daily-deals");
   const { toggleDrawer, lang } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -30,7 +30,7 @@ const DailyDeals = () => {
     <>
       <PageTitle>{"Daily Deals List"}</PageTitle>
       <MainDrawer>
-        <DailyDealsDrawer />
+        <DailyDealsDrawer refetch={refetch} />
       </MainDrawer>
 
       <AnimatedContent>

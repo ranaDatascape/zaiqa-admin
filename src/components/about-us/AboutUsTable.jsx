@@ -17,7 +17,7 @@ const AboutUsTable = ({data , isLoading , refetch}) => {
       const response = await axiosPublic.patch(`/about-us/status/${id}`);
       if (response.status === 200) {
         notifySuccess("Status updated successfully!");
-        window.location.reload(); 
+        refetch(); // Refetch data after successful update
       } else {
         notifyError("Failed to update status.");
       }
@@ -43,7 +43,7 @@ const AboutUsTable = ({data , isLoading , refetch}) => {
 
           if (response.status === 200) {
             notifySuccess("About deleted successfully!");
-            window.location.reload(); // Reload full page after successful delete
+            refetch();
           } else {
             notifyError("Failed to delete banner.");
           }

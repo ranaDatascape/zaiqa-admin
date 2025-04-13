@@ -11,7 +11,7 @@ import useGetDatas from "@/hooks/useGetDatas";
 const OfferZone = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, isLoading] = useGetDatas("/offer-zone", "offer-zone");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/offer-zone", "offer-zone");
 
   const filteredData = data?.filter((item) =>
     Object.values(item).some((value) =>

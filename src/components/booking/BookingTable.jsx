@@ -2,7 +2,7 @@ import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import React from "react";
 import EditDeleteButton from "../table/EditDeleteButton";
 
-const BookingTable = ({ BookingList = [], isLoading }) => {
+const BookingTable = ({ BookingList = [], isLoading , refetch}) => {
   console.log("Booking List", BookingList);
 
   if (isLoading) {
@@ -52,10 +52,6 @@ const BookingTable = ({ BookingList = [], isLoading }) => {
           <TableCell className="font-semibold uppercase text-xs">
             {booking.peopleNum}
           </TableCell>
-
-          
-
-         
 
           <TableCell className="font-semibold uppercase text-xs">
             {booking.address}

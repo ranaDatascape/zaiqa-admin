@@ -16,7 +16,7 @@ import AnimatedContent from "@/components/common/AnimatedContent";
 
 const Gallery = () => {
   const { toggleDrawer } = useContext(SidebarContext);
-  const [data, isLoading] = useGetDatas("/gallery", "gallery");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/gallery", "gallery");
 
   return (
     <>
@@ -45,7 +45,7 @@ const Gallery = () => {
                 <TableCell>{"Delete"}</TableCell>
               </tr>
             </TableHeader>
-            <GalleryTable galleries={data} isLoading={isLoading} />
+            <GalleryTable galleries={data} isLoading={isLoading} refetch={refetch} />
           </Table>
         </TableContainer>
       </AnimatedContent>

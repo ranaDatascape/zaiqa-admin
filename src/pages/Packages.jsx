@@ -20,7 +20,7 @@ import React, { useContext, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const Packages = () => {
-  const [data, isLoading] = useGetDatas( "/packages","packages" );
+  const { data, isLoading, isError, error, refetch } = useGetDatas( "/packages","packages" );
   const { toggleDrawer, lang } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
 

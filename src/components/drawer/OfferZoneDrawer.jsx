@@ -11,7 +11,7 @@ import useGetDatas from "@/hooks/useGetDatas";
 const OfferZoneDrawer = () => {
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
-  const [data , isLoading] = useGetDatas("/products", "products");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/products", "products");
   const {
     handleSubmit,
     register,

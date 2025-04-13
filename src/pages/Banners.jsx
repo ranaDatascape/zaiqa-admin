@@ -10,13 +10,13 @@ import React, { useContext, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const Banners = () => {
-  const [data, isLoading, refetch] = useGetDatas("/banners/getall", "allbanners");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/banners/getall", "allbanners");
   const { toggleDrawer } = useContext(SidebarContext);
   return (
     <>
       <PageTitle>{"Banner List"}</PageTitle>
       <MainDrawer>
-        <BannerDrawer />
+        <BannerDrawer refetch={refetch}  />
       </MainDrawer>
 
       <AnimatedContent>

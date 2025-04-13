@@ -9,7 +9,7 @@ import LabelArea from "../form/selectOption/LabelArea";
 import InputArea from "../form/input/InputArea";
 import TextAreaCom from "../form/input/TextAreaCom";
 
-const TestimonialsDrawer = () => {
+const TestimonialsDrawer = ({refetch}) => {
   const {
     register,
     handleSubmit,

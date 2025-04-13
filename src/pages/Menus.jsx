@@ -11,7 +11,7 @@ import useGetDatas from "@/hooks/useGetDatas";
 const Menus = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, isLoading] = useGetDatas("/menus/", "menus");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/menus/", "menus");
 
   const filteredData = data?.filter((item) =>
     Object.values(item).some((value) =>

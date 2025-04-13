@@ -1,10 +1,13 @@
 import React from "react";
+import { ScaleLoader } from "react-spinners";
 
 const ThemeSuspense = () => {
   return (
-    <div className="w-full h-screen p-6 text-lg font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-900">
-      Loading...
-    </div>
+    <>
+      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-900">
+        <ScaleLoader color="#10B981" /> {/* Tailwind Emerald-500 HEX */}
+      </div>
+    </>
   );
 };
 

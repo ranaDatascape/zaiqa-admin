@@ -10,7 +10,7 @@ import SliderImagesTable from "@/components/sliderImages/SliderImagesTable";
 import useGetDatas from "@/hooks/useGetDatas";
 
 const SliderImages = () => {
-    const [data, isLoading, refetch] = useGetDatas("/slider-image/all", "sliderimages");
+    const { data, isLoading, isError, error, refetch } = useGetDatas("/slider-image/all", "sliderimages");
     const { toggleDrawer} = useContext(SidebarContext);
   return (
     <>

@@ -11,7 +11,7 @@ import React, { useContext, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const MappingPackage = () => {
-    const [data, isLoading] = useGetDatas( "/package-mapping/getall","packages-mapping" );
+    const { data, isLoading, isError, error, refetch } = useGetDatas( "/package-mapping/getall","packages-mapping" );
       const { toggleDrawer, lang } = useContext(SidebarContext);
       const [searchQuery, setSearchQuery] = useState("");
     

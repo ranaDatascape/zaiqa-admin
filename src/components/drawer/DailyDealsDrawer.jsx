@@ -8,8 +8,8 @@ import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 
-const DailyDealsDrawer = () => {
-  const [data, isLoading] = useGetDatas("/products", "products");
+const DailyDealsDrawer = ({refetch}) => {
+  const { data, isLoading, isError, error } = useGetDatas("/products", "products");
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const {
@@ -25,12 +25,13 @@ const DailyDealsDrawer = () => {
       if (response.status === 200 || response.status === 201) {
         notifySuccess("Daily Deal Added Successfully!");
         closeDrawer();
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
       notifyError(error.message || "Something went wrong!");
     }
   };
+  if(isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full h-full p-6">
