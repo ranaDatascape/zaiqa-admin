@@ -23,7 +23,7 @@ const Menus = () => {
     <>
       <PageTitle>{"Menus List"}</PageTitle>
       <MainDrawer>
-        <MenusDrawer />
+        <MenusDrawer refetch={refetch} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">

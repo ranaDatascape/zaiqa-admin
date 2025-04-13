@@ -47,14 +47,17 @@ const ProductDrawer = ({ id }) => {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm();
-  const {category, isLoading} = useGetDatas("/category/parent", "category");
-  const {subcategory} = useGetDatas("/category", "subCategory");
-  const {menus} = useGetDatas("/menus", "menus");
+  const {data:category, isLoading} = useGetDatas("/category/parent", "category");
+  const {data:subcategory} = useGetDatas("/category", "subCategory");
+  const {data:menus} = useGetDatas("/menus", "menus");
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [description, setDescription] = useState("");
   const [returnPolicy, setReturnPolicy] = useState("");
+
+  console.log(category);
+
 
   const axiosPublic = useAxiosPublic();
 

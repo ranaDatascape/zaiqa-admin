@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { SidebarContext } from "@/context/SidebarContext";
 
 const CategoryDrawer = () => {
-  const {category, isLoading , refetch} = useGetDatas(
+  const {data:category, isLoading , refetch} = useGetDatas(
     "/category/parent",
     "parentCategory"
   );

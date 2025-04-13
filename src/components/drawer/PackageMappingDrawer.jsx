@@ -19,8 +19,8 @@ const PackageMappingDrawer = () => {
   const { closeDrawer } = useContext(SidebarContext);
   const axiosPublic = useAxiosPublic();
 
-  const {packageNames, isLoadingDetails} = useGetDatas("/packages", "packages");
-  const {productNames, isLoading} = useGetDatas("/products", "products");
+  const {data:packageNames, isLoadingDetails} = useGetDatas("/packages", "packages");
+  const {data:productNames, isLoading} = useGetDatas("/products", "products");
 console.log(productNames)
   const onSubmit = async (data) => {
     try {
