@@ -17,7 +17,7 @@ const SliderImages = () => {
       <PageTitle>{"Slider Images"}</PageTitle>
 
       <MainDrawer>
-        <SliderImagesDrawer />
+        <SliderImagesDrawer refetch={refetch} />
       </MainDrawer>
 
       <AnimatedContent>

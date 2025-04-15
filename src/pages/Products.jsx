@@ -5,7 +5,7 @@ import {
   TableCell,
   TableFooter,
   TableContainer,
-  Select,
+  // Select,
   Input,
   Button,
   Card,
@@ -14,13 +14,13 @@ import {
 } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
 import { FiPlus } from "react-icons/fi";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+// import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 //internal import
 
 import useAsync from "@/hooks/useAsync";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
-import UploadMany from "@/components/common/UploadMany";
+// import UploadMany from "@/components/common/UploadMany";
 import NotFound from "@/components/table/NotFound";
 import ProductServices from "@/services/ProductServices";
 import PageTitle from "@/components/Typography/PageTitle";
@@ -32,7 +32,7 @@ import useProductFilter from "@/hooks/useProductFilter";
 import DeleteModal from "@/components/modal/DeleteModal";
 import BulkActionDrawer from "@/components/drawer/BulkActionDrawer";
 import TableLoading from "@/components/preloader/TableLoading";
-import SelectCategory from "@/components/form/selectOption/SelectCategory";
+// import SelectCategory from "@/components/form/selectOption/SelectCategory";
 import AnimatedContent from "@/components/common/AnimatedContent";
 
 const Products = () => {
@@ -43,14 +43,14 @@ const Products = () => {
   const {
     toggleDrawer,
     lang,
-    currentPage,
+    // currentPage,
     handleChangePage,
-    searchText,
+    // searchText,
     // category,
     setCategory,
     searchRef,
     handleSubmitForAll,
-    sortedField,
+    // sortedField,
     setSortedField,
     limitData,
   } = useContext(SidebarContext);
@@ -69,13 +69,13 @@ const Products = () => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
-  const handleSelectAll = () => {
-    setIsCheckAll(!isCheckAll);
-    setIsCheck(data?.products.map((li) => li._id));
-    if (isCheckAll) {
-      setIsCheck([]);
-    }
-  };
+  // const handleSelectAll = () => {
+  //   setIsCheckAll(!isCheckAll);
+  //   setIsCheck(data?.products.map((li) => li._id));
+  //   if (isCheckAll) {
+  //     setIsCheck([]);
+  //   }
+  // };
   // handle reset field
   const handleResetField = () => {
     setCategory("");
@@ -86,11 +86,11 @@ const Products = () => {
   // console.log('productss',products)
   const {
     serviceData,
-    filename,
-    isDisabled,
-    handleSelectFile,
-    handleUploadMultiple,
-    handleRemoveSelectFile,
+    // filename,
+    // isDisabled,
+    // handleSelectFile,
+    // handleUploadMultiple,
+    // handleRemoveSelectFile,
   } = useProductFilter(data?.products);
 
   return (
@@ -109,7 +109,7 @@ const Products = () => {
               className="py-3 md:pb-0 grid gap-4 lg:gap-6 xl:gap-6 xl:flex"
             >
               <div className="flex-grow-0 sm:flex-grow md:flex-grow lg:flex-grow xl:flex-grow">
-                <UploadMany
+                {/* <UploadMany
                   title="Products"
                   filename={filename}
                   isDisabled={isDisabled}
@@ -117,7 +117,7 @@ const Products = () => {
                   handleSelectFile={handleSelectFile}
                   handleUploadMultiple={handleUploadMultiple}
                   handleRemoveSelectFile={handleRemoveSelectFile}
-                />
+                /> */}
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
@@ -155,11 +155,11 @@ const Products = () => {
                 ></button>
               </div>
 
-              <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
+              {/* <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <SelectCategory setCategory={setCategory} lang={lang} />
-              </div>
+              </div> */}
 
-              <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
+              {/* <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <Select onChange={(e) => setSortedField(e.target.value)}>
                   <option value="All" defaultValue hidden>
                     {t("Price")}
@@ -181,7 +181,7 @@ const Products = () => {
                     {t("DateUpdatedDesc")}
                   </option>
                 </Select>
-              </div>
+              </div> */}
               <div className="flex items-center gap-2 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <div className="w-full mx-1">
                   <Button type="submit" className="h-12 w-full bg-emerald-700">

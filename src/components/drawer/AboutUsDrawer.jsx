@@ -7,80 +7,94 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import DrawerButton from "../form/button/DrawerButton";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-const AboutUsDrawer = ({refetch}) => {
+const AboutUsDrawer = ({ refetch }) => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
-  
+  const [description, setDescription] = useState("");
+
   // Separate states for each image
   const [files, setFiles] = useState({
     signatureImage: null,
     mainImage: null,
-    secondaryImage: null
+    secondaryImage: null,
   });
   const [previews, setPreviews] = useState({
     signatureImage: null,
     mainImage: null,
-    secondaryImage: null
+    secondaryImage: null,
   });
 
   const handleFileChange = (e, imageType) => {
     const selectedFile = e.target.files[0];
     const maxSize = 5 * 1024 * 1024;
-    
+
     if (selectedFile.size > maxSize) {
       notifyError("Image size must be less than 5MB.");
-      setFiles(prev => ({ ...prev, [imageType]: null }));
-      setPreviews(prev => ({ ...prev, [imageType]: null }));
+      setFiles((prev) => ({ ...prev, [imageType]: null }));
+      setPreviews((prev) => ({ ...prev, [imageType]: null }));
       return;
     }
-    
+
     if (selectedFile) {
-      setFiles(prev => ({ ...prev, [imageType]: selectedFile }));
-      setPreviews(prev => ({ ...prev, [imageType]: URL.createObjectURL(selectedFile) }));
+      setFiles((prev) => ({ ...prev, [imageType]: selectedFile }));
+      setPreviews((prev) => ({
+        ...prev,
+        [imageType]: URL.createObjectURL(selectedFile),
+      }));
     }
   };
-
 
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
-      
+
       // Append text data
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         formData.append(key, data[key]);
       });
-  
+
       // Append image files directly with the correct field names
       if (files?.signatureImage) {
-        formData.append('signatureImage', files?.signatureImage);
+        formData.append("signatureImage", files?.signatureImage);
       }
       if (files?.mainImage) {
-        formData.append('mainImage', files?.mainImage);
+        formData.append("mainImage", files?.mainImage);
       }
       if (files?.secondaryImage) {
-        formData.append('secondaryImage', files?.secondaryImage);
+        formData.append("secondaryImage", files?.secondaryImage);
       }
-  
+
       // Send directly to about-us endpoint with multipart/form-data
       const res = await axiosPublic.post("/about-us/add", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-  
+
       if (res.status === 201) {
         notifySuccess("About Us created successfully.");
         reset();
         closeDrawer();
-        setFiles({ signatureImage: null, mainImage: null, secondaryImage: null });
-        setPreviews({ signatureImage: null, mainImage: null, secondaryImage: null });
+        setFiles({
+          signatureImage: null,
+          mainImage: null,
+          secondaryImage: null,
+        });
+        setPreviews({
+          signatureImage: null,
+          mainImage: null,
+          secondaryImage: null,
+        });
         refetch();
       }
     } catch (error) {
@@ -88,6 +102,42 @@ const AboutUsDrawer = ({refetch}) => {
       notifyError(error.response?.data?.message || "About Us creation failed.");
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }], // Headers
+      ["bold", "italic", "underline", "strike"], // Text formatting
+      [{ list: "ordered" }, { list: "bullet" }], // Lists
+      [{ script: "sub" }, { script: "super" }], // Subscript / Superscript
+      [{ indent: "-1" }, { indent: "+1" }], // Indentation
+      [{ align: [] }], // Alignments
+      [{ color: [] }, { background: [] }], // Text color & background color
+      ["blockquote", "code-block"], // Blockquote & Code block
+      ["link", "image", "video"], // Media tools
+      ["clean"], // Remove formatting
+      ["custom-check"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "script",
+    "indent",
+    "align",
+    "color",
+    "background",
+    "blockquote",
+    "code-block",
+    "link",
+    "image",
+    "video",
+  ];
 
   return (
     <>
@@ -125,15 +175,27 @@ const AboutUsDrawer = ({refetch}) => {
               </div>
             </div>
             {/* Description */}
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-28 relative">
               <LabelArea label="Description" />
               <div className="col-span-6 sm:col-span-4">
-                <InputArea
-                  required={true}
-                  register={register}
-                  name="description"
-                  type="text"
-                  placeholder="Enter Description"
+                {/* ReactQuill Editor */}
+                <ReactQuill
+                  value={description}
+                  modules={modules}
+                  formats={formats}
+                  onChange={(content) => {
+                    setDescription(content);
+                    setValue("description", content); // Update form value
+                  }}
+                  placeholder="Write something..."
+                  className="h-[300px]"
+                />
+
+                {/* Hidden Input for React Hook Form */}
+                <input
+                  type="hidden"
+                  {...register("description")}
+                  value={description}
                 />
               </div>
             </div>
@@ -171,7 +233,7 @@ const AboutUsDrawer = ({refetch}) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, 'signatureImage')}
+                  onChange={(e) => handleFileChange(e, "signatureImage")}
                   className="border border-gray-300 rounded-lg p-2 block w-full cursor-pointer"
                 />
               </div>
@@ -191,7 +253,7 @@ const AboutUsDrawer = ({refetch}) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, 'mainImage')}
+                  onChange={(e) => handleFileChange(e, "mainImage")}
                   className="border border-gray-300 rounded-lg p-2 block w-full cursor-pointer"
                 />
               </div>
@@ -211,7 +273,7 @@ const AboutUsDrawer = ({refetch}) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, 'secondaryImage')}
+                  onChange={(e) => handleFileChange(e, "secondaryImage")}
                   className="border border-gray-300 rounded-lg p-2 block w-full cursor-pointer"
                 />
               </div>

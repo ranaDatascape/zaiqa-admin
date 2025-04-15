@@ -8,7 +8,7 @@ import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 import LabelArea from "../form/selectOption/LabelArea";
 
-const SliderImagesDrawer = () => {
+const SliderImagesDrawer = ({refetch}) => {
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
@@ -78,7 +78,7 @@ const SliderImagesDrawer = () => {
         closeDrawer();
         setPreview(null);
         setFile(null);
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
       console.error("Slider creation failed:", error);
@@ -157,7 +157,7 @@ const SliderImagesDrawer = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-40 relative">
               <LabelArea label="Status" />
               <div className="col-span-6 sm:col-span-4">
                 <select
