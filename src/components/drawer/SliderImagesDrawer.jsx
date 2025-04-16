@@ -8,12 +8,11 @@ import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 import LabelArea from "../form/selectOption/LabelArea";
 
-const SliderImagesDrawer = () => {
+const SliderImagesDrawer = ({refetch}) => {
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [message, setMessage] = useState("");
   const {
     handleSubmit,
     register,
@@ -36,54 +35,31 @@ const SliderImagesDrawer = () => {
     }
   };
 
-  const uploadImage = async () => {
-    if (!file) {
-      setMessage("Please select an image.");
-      return null;
-    }
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const res = await axiosPublic.post(`/images/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      return res.data.imageUrl;
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      setMessage("Image upload failed.");
-      return null;
-    }
-  };
-
   const onSubmit = async (data) => {
-    const uploadedImageUrl = await uploadImage();
-    if (!uploadedImageUrl) return;
-
-    const sliderData = {
-      title: data.title,
-      image: uploadedImageUrl,
-      image_thumb: uploadedImageUrl,
-      position: data.position,
-      link: data.link,
-      status: data.status,
-    };
-
     try {
-      const res = await axiosPublic.post("/slider-image/add", sliderData);
-      if (res.status === 200 || res.status === 201) {
+      const formData = new FormData();
+      for (const key in data) {
+        if (key === "image") {
+          formData.append("image", data.image[0]);
+        } else {
+          formData.append(key, data[key]);
+        }
+      }
+      const res = await axiosPublic.post("/slider-image/add?type=slider", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+      );
+      if (res.status === 200) {
         notifySuccess("Slider Image Added Successfully!");
         reset();
         closeDrawer();
         setPreview(null);
         setFile(null);
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
-      console.error("Slider creation failed:", error);
-      setMessage("Slider creation failed.");
-      notifyError("Slider creation failed.");
+      // notifyError("Slider creation failed.");
+      console.error(error); // helpful for debugging
     }
   };
 
@@ -112,6 +88,7 @@ const SliderImagesDrawer = () => {
               <LabelArea label="Images" />
               <div className="col-span-6 sm:col-span-4">
                 <input
+                 {...register("image", { required: true })}
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
