@@ -11,7 +11,7 @@ import useGetDatas from "@/hooks/useGetDatas";
 const Menus = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, isLoading] = useGetDatas("/menus/", "menus");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/menus/", "menus");
 
   const filteredData = data?.filter((item) =>
     Object.values(item).some((value) =>
@@ -23,7 +23,7 @@ const Menus = () => {
     <>
       <PageTitle>{"Menus List"}</PageTitle>
       <MainDrawer>
-        <MenusDrawer />
+        <MenusDrawer refetch={refetch} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">

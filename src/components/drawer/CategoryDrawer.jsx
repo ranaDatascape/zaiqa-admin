@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { SidebarContext } from "@/context/SidebarContext";
 
 const CategoryDrawer = () => {
-  const [category, isLoading] = useGetDatas(
+  const {data:category, isLoading , refetch} = useGetDatas(
     "/category/parent",
     "parentCategory"
   );
@@ -99,7 +99,7 @@ const CategoryDrawer = () => {
         closeDrawer();
         setPreview(null);
         setFile(null);
-        window.location.reload(); // ✅ Reload full page
+        refetch(); // ✅ Reload full page
       }
     } catch (error) {
       console.error("Banner creation failed:", error);

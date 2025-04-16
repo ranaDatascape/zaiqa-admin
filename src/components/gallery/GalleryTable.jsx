@@ -8,7 +8,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-const GalleryTable = ({ galleries, isLoading }) => {
+const GalleryTable = ({ galleries, isLoading ,refetch }) => {
     const axiosPublic = useAxiosPublic();
   if (isLoading) {
     return <p>Loading...</p>;
@@ -21,7 +21,7 @@ const GalleryTable = ({ galleries, isLoading }) => {
 
       if (response.status === 200) {
         notifySuccess("Status updated successfully!");
-        window.location.reload(); 
+        refetch()
       } else {
         notifyError("Failed to update status.");
       }
@@ -48,7 +48,7 @@ const GalleryTable = ({ galleries, isLoading }) => {
           const response = await axiosPublic.delete(`/gallery/delete/${id}`);
           if (response.status === 200) {
             notifySuccess("Image deleted successfully!");
-            window.location.reload(); // Reload full page after successful delete
+            refetch() // Reload full page after successful delete
           } else {
             notifyError("Failed to delete banner.");
           }

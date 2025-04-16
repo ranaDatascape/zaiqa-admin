@@ -8,7 +8,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { SidebarContext } from "@/context/SidebarContext";
 import ThemeSuspense from "@/components/theme/ThemeSuspense";
 import { routes } from "@/routes";
-// const Page404 = lazy(() => import("@/pages/404"));
+const Page404 = lazy(() => import("@/pages/404"));
 
 const Layout = () => {
   const { isSidebarOpen, closeSidebar, navBar } = useContext(SidebarContext);
@@ -53,7 +53,7 @@ const Layout = () => {
                   ) : null;
                 })}
                 <Redirect exact from="/" to="/dashboard" />
-                {/* <Route component={Page404} /> */}
+                <Route component={Page404} />
               </Switch>
             </Suspense>
           </Main>

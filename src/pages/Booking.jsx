@@ -16,7 +16,7 @@ import {
 } from "@windmill/react-ui";
 
 const Booking = () => {
-  const [data, isLoading] = useGetDatas("/booking", "booking");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/booking", "booking");
   const [searchQuery, setSearchQuery] = useState("");
 
   if (isLoading) {
@@ -85,7 +85,7 @@ const Booking = () => {
                 <TableCell>{"ACTION"}</TableCell>
               </tr>
             </TableHeader>
-            <BookingTable BookingList={filteredData} isLoading={isLoading} />
+            <BookingTable BookingList={filteredData} isLoading={isLoading} refetch={refetch} />
           </Table>
         </TableContainer>
       </AnimatedContent>

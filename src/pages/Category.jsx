@@ -33,48 +33,28 @@ import CheckBox from "@/components/form/others/CheckBox";
 import CategoryTable from "@/components/category/CategoryTable";
 import NotFound from "@/components/table/NotFound";
 import AnimatedContent from "@/components/common/AnimatedContent";
+import useGetDatas from "@/hooks/useGetDatas";
 
 const Category = () => {
   const { toggleDrawer, lang } = useContext(SidebarContext);
 
-  const { data, loading, error } = useAsync(CategoryServices.getAllCategory);
-  const { data: getAllCategories } = useAsync(
-    CategoryServices.getAllCategories
-  );
+  const { data, loading, error , refetch} = useGetDatas("/category" , "category");
 
-  const { handleDeleteMany, allId, handleUpdateMany, serviceId } =
-    useToggleDrawer();
+  const {  allId, serviceId } =  useToggleDrawer();
 
   const { t } = useTranslation();
 
   const {
     handleSubmitCategory,
     categoryRef,
-    totalResults,
-    resultsPerPage,
     dataTable,
     serviceData,
-    handleChangePage,
-    filename,
-    isDisabled,
     setCategoryType,
-    handleSelectFile,
-    handleUploadMultiple,
-    handleRemoveSelectFile,
   } = useFilter(data[0]?.children ? data[0]?.children : data);
 
-  // react hooks
-  const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const [showChild, setShowChild] = useState(false);
 
-  const handleSelectAll = () => {
-    setIsCheckAll(!isCheckAll);
-    setIsCheck(data[0]?.children.map((li) => li._id));
-    if (isCheckAll) {
-      setIsCheck([]);
-    }
-  };
 
   // handle reset field function
   const handleResetField = () => {
@@ -82,20 +62,11 @@ const Category = () => {
     categoryRef.current.value = "";
   };
 
-  // console.log("serviceData", serviceData, "tableData", dataTable);
 
   return (
     <>
       <PageTitle>{t("Category")}</PageTitle>
       <DeleteModal ids={allId} setIsCheck={setIsCheck} />
-
-      <BulkActionDrawer
-        ids={allId}
-        title="Categories"
-        lang={lang}
-        data={data}
-        isCheck={isCheck}
-      />
 
       <MainDrawer>
         <CategoryDrawer id={serviceId} data={data} lang={lang} />
@@ -111,7 +82,7 @@ const Category = () => {
             >
               {/* </div> */}
               <div className="flex justify-start w-1/2 xl:w-1/2 md:w-full">
-                <UploadMany
+                {/* <UploadMany
                   title="Categories"
                   exportData={getAllCategories}
                   filename={filename}
@@ -119,7 +90,7 @@ const Category = () => {
                   handleSelectFile={handleSelectFile}
                   handleUploadMultiple={handleUploadMultiple}
                   handleRemoveSelectFile={handleRemoveSelectFile}
-                />
+                /> */}
               </div>
 
               <div className="lg:flex  md:flex xl:justify-end xl:w-1/2  md:w-full md:justify-start flex-grow-0">
@@ -175,12 +146,12 @@ const Category = () => {
         </Card>
       </AnimatedContent>
 
-      <SwitchToggleChildCat
+      {/* <SwitchToggleChildCat
         title=" "
         handleProcess={setShowChild}
         processOption={showChild}
         name={showChild}
-      />
+      /> */}
       {loading ? (
         <TableLoading row={12} col={6} width={190} height={20} />
       ) : error ? (
@@ -190,22 +161,12 @@ const Category = () => {
           <Table>
             <TableHeader>
               <tr>
-                {/* <TableCell>
-                  <CheckBox
-                    type="checkbox"
-                    name="selectAll"
-                    id="selectAll"
-                    handleClick={handleSelectAll}
-                    isChecked={isCheckAll}
-                  />
-                </TableCell> */}
-
                 <TableCell>{t("catIdTbl")}</TableCell>
                 <TableCell>{t("catIconTbl")}</TableCell>
                 <TableCell>{t("CatTbName")}</TableCell>
                 <TableCell>{t("CatTbDescription")}</TableCell>
                 <TableCell className="text-center">
-                  {t("catPublishedTbl")}
+                  {t("Status")}
                 </TableCell>
                 <TableCell className="text-right">
                   {t("catActionsTbl")}
@@ -216,6 +177,7 @@ const Category = () => {
             <CategoryTable
               data={data}
               lang={lang}
+              refetch={refetch}
               isCheck={isCheck}
               categories={dataTable}
               setIsCheck={setIsCheck}
@@ -223,14 +185,14 @@ const Category = () => {
             />
           </Table>
 
-          <TableFooter>
+          {/* <TableFooter>
             <Pagination
               totalResults={totalResults}
               resultsPerPage={resultsPerPage}
               onChange={handleChangePage}
               label="Table navigation"
             />
-          </TableFooter>
+          </TableFooter> */}
         </TableContainer>
       ) : (
         <NotFound title="Sorry, There are no categories right now." />

@@ -47,14 +47,19 @@ const ProductDrawer = ({ id }) => {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm();
-  const [category, isLoading] = useGetDatas("/category/parent", "category");
-  const [subcategory] = useGetDatas("/category", "subCategory");
-  const [menus] = useGetDatas("/menus", "menus");
+  const { data: category, isLoading } = useGetDatas(
+    "/category/parent",
+    "category"
+  );
+  const { data: subcategory , isError, error, refetch } = useGetDatas("/category", "subCategory");
+  const { data: menus } = useGetDatas("/menus", "menus");
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [description, setDescription] = useState("");
   const [returnPolicy, setReturnPolicy] = useState("");
+
+  console.log(category);
 
   const axiosPublic = useAxiosPublic();
 
@@ -75,57 +80,55 @@ const ProductDrawer = ({ id }) => {
     }
   };
 
-//   // ✅ Upload Multiple Images Function
-// const uploadImages = async (files) => {
-//   if (!files || files.length === 0) {
-//     setMessage("Please select images.");
-//     return null;
-//   }
+  //   // ✅ Upload Multiple Images Function
+  // const uploadImages = async (files) => {
+  //   if (!files || files.length === 0) {
+  //     setMessage("Please select images.");
+  //     return null;
+  //   }
 
-//   const formData = new FormData();
-//   Array.from(files).forEach((file) => formData.append("images", file)); // Append multiple files
+  //   const formData = new FormData();
+  //   Array.from(files).forEach((file) => formData.append("images", file)); // Append multiple files
 
-//   try {
-//     const res = await axiosPublic.post(`/images/upload`, formData, {
-//       headers: { "Content-Type": "multipart/form-data" },
-//     });
-    
-//     return res.data.imageUrls; // Expecting an array of URLs from backend
-//   } catch (error) {
-//     console.error("Image upload failed:", error);
-//     setMessage("Image upload failed.");
-//     return null;
-//   }
-// };
+  //   try {
+  //     const res = await axiosPublic.post(`/images/upload`, formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
 
-const uploadImage = async () => {
-  if (!file) {
-    notifyError("Please select an image.");
-    return null;
-  }
+  //     return res.data.imageUrls; // Expecting an array of URLs from backend
+  //   } catch (error) {
+  //     console.error("Image upload failed:", error);
+  //     setMessage("Image upload failed.");
+  //     return null;
+  //   }
+  // };
 
-  const formData = new FormData();
-  formData.append("image", file); // Append single file
+  const uploadImage = async () => {
+    if (!file) {
+      notifyError("Please select an image.");
+      return null;
+    }
 
-  try {
-    const res = await axiosPublic.post(`/images/upload`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const formData = new FormData();
+    formData.append("image", file); // Append single file
 
-    return res.data.imageUrl; // Expecting a single URL from the backend
-  } catch (error) {
-    console.error("Image upload failed:", error);
-    notifyError("Image upload failed.");
-    return null;
-  }
-};
+    try {
+      const res = await axiosPublic.post(`/images/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-
+      return res.data.imageUrl; // Expecting a single URL from the backend
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      notifyError("Image upload failed.");
+      return null;
+    }
+  };
 
   const onSubmit = async (data) => {
     console.log(data);
     const imageUrl = await uploadImage();
-    
+
     if (imageUrl) {
       data.image = imageUrl;
       const productData = {
@@ -134,11 +137,15 @@ const uploadImage = async () => {
         image: imageUrl,
         tag: tag,
       };
-      console.log(productData);
-      const res = await axiosPublic.post("/products/add", productData);
-      if (res.status === 200 || res.status === 201) {
-        notifySuccess("Product Added Successfully");
-        closeDrawer();
+      try {
+        const res = await axiosPublic.post("/products/add", productData);
+        if (res.status === 200 || res.status === 201) {
+          notifySuccess("Product Added Successfully");
+          closeDrawer();
+          reset();
+        }
+      } catch (error) {
+        notifyError("Failed to add product.");
       }
     }
   };
@@ -227,8 +234,7 @@ const uploadImage = async () => {
                     <p>Loading categories...</p>
                   ) : (
                     <select
-                      {...register("subCategory", {
-                      })}
+                      {...register("subCategory", {})}
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="">Select a Sub Category</option>
@@ -249,8 +255,7 @@ const uploadImage = async () => {
                     <p>Loading menus...</p>
                   ) : (
                     <select
-                      {...register("menuId", {
-                      })}
+                      {...register("menuId", {})}
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="">Select a menus</option>
@@ -283,8 +288,7 @@ const uploadImage = async () => {
                 <LabelArea label={t("Product Code")} />
                 <div className="col-span-8 sm:col-span-4">
                   <Input
-                    {...register(`productCode`, {
-                    })}
+                    {...register(`productCode`, {})}
                     name="productCode"
                     type="text"
                     placeholder={t("ProductCode")}
@@ -356,7 +360,7 @@ const uploadImage = async () => {
                   />
                 )}
               </div>
-              
+
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <LabelArea label={t("ProductTag")} />
                 <div className="col-span-8 sm:col-span-4">

@@ -8,7 +8,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { SidebarContext } from "@/context/SidebarContext";
 
-const BannerDrawer = () => {
+const BannerDrawer = ({refetch}) => {
   const {
     register,
     handleSubmit,
@@ -60,11 +60,9 @@ const BannerDrawer = () => {
         closeDrawer();
         setPreview(null);
         setFile(null);
-        window.location.reload(); // ✅ Reload full page
+        refetch(); // ✅ Reload full page
       }
     } catch (error) {
-      console.error("Banner creation failed:", error);
-      setMessage("Banner creation failed.");
       notifyError("Banner creation failed.");
     }
   };

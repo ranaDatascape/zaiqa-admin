@@ -17,7 +17,7 @@ import { useContext } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const AboutUs = () => {
-  const [data, isLoading, refetch] = useGetDatas(
+  const { data, isLoading, isError, error, refetch } = useGetDatas(
     "about-us/all",
     "all-about-us"
   );
@@ -26,7 +26,7 @@ const AboutUs = () => {
     <>
       <PageTitle>{"About US"}</PageTitle>
       <MainDrawer>
-        <AboutUsDrawer />
+        <AboutUsDrawer refetch={refetch} />
       </MainDrawer>
 
       <AnimatedContent>

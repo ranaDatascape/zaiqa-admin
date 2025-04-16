@@ -14,17 +14,16 @@ import { notifyError, notifySuccess } from "@/utils/toast";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-const TestimonialsTable = ({ testimonials, isLoading }) => {
+const TestimonialsTable = ({ testimonials, isLoading , refetch}) => {
   const axiosPublic = useAxiosPublic();
 
   // Handle status toggle
     const handleToggle = async (id) => {
       try {
         const response = await axiosPublic.patch(`/testimonials/status/${id}`);
-  
         if (response.status === 200) {
           notifySuccess("Status updated successfully!");
-          window.location.reload(); 
+          refetch();
         } else {
           notifyError("Failed to update status.");
         }
@@ -48,10 +47,9 @@ const TestimonialsTable = ({ testimonials, isLoading }) => {
       if (result.isConfirmed) {
         try {
           const response = await axiosPublic.delete(`/testimonials/${id}`);
-
           if (response.status === 200) {
             notifySuccess("Testimonials deleted successfully!");
-            window.location.reload(); // Reload full page after successful delete
+            refetch(); // Reload full page after successful delete
           } else {
             notifyError("Failed to delete Testimonials.");
           }

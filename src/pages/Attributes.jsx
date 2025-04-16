@@ -12,15 +12,13 @@ import {
 } from "@windmill/react-ui";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 //internal import
 import AttributeTable from "@/components/attribute/AttributeTable";
 import UploadMany from "@/components/common/UploadMany";
 import AttributeDrawer from "@/components/drawer/AttributeDrawer";
-import BulkActionDrawer from "@/components/drawer/BulkActionDrawer";
 import MainDrawer from "@/components/drawer/MainDrawer";
-import CheckBox from "@/components/form/others/CheckBox";
 import DeleteModal from "@/components/modal/DeleteModal";
 import TableLoading from "@/components/preloader/TableLoading";
 import NotFound from "@/components/table/NotFound";

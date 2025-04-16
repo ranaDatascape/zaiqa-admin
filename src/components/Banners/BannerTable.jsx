@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-const BannerTable = ({ data, isLoading }) => {
+const BannerTable = ({ data, isLoading ,refetch}) => {
   const axiosPublic = useAxiosPublic();
 
   // Handle status toggle
@@ -17,7 +17,7 @@ const BannerTable = ({ data, isLoading }) => {
 
       if (response.status === 200) {
         notifySuccess("Status updated successfully!");
-        window.location.reload(); 
+        refetch();
       } else {
         notifyError("Failed to update status.");
       }
@@ -45,7 +45,7 @@ const BannerTable = ({ data, isLoading }) => {
 
           if (response.status === 200) {
             notifySuccess("Banner deleted successfully!");
-            window.location.reload(); // Reload full page after successful delete
+            refetch();// Reload full page after successful delete
           } else {
             notifyError("Failed to delete banner.");
           }
@@ -84,7 +84,7 @@ const BannerTable = ({ data, isLoading }) => {
                 />
               </TableCell>
               <TableCell className="font-medium text-sm">
-                {banner.status === 1 ? (
+                {banner.status === "Active" ? (
                   <span className="text-green-500 font-semibold">Active</span>
                 ) : (
                   <span className="text-red-500 font-semibold">Inactive</span>
@@ -93,7 +93,7 @@ const BannerTable = ({ data, isLoading }) => {
               <TableCell>
                 <Switch
                   onChange={() => handleToggle(banner.id)}
-                  checked={banner.status === 1}
+                  checked={banner.status === "Active"}
                   onColor="#10B981" // Green for active
                   offColor="#EF4444" // Red for inactive
                   uncheckedIcon={false}

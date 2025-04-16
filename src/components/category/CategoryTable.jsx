@@ -1,37 +1,40 @@
 import { Avatar, TableBody, TableCell, TableRow } from "@windmill/react-ui";
-import { Link } from "react-router-dom";
-import { IoRemoveSharp } from "react-icons/io5";
-
-//internal import
-
-import CheckBox from "@/components/form/others/CheckBox";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
 import DeleteModal from "@/components/modal/DeleteModal";
 import MainDrawer from "@/components/drawer/MainDrawer";
 import CategoryDrawer from "@/components/drawer/CategoryDrawer";
-import ShowHideButton from "@/components/table/ShowHideButton";
+import Switch from "react-switch";
 import EditDeleteButton from "@/components/table/EditDeleteButton";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { notifyError, notifySuccess } from "@/utils/toast";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 const CategoryTable = ({
   data,
   lang,
+  refetch,
   isCheck,
   categories,
-  setIsCheck,
   useParamId,
-  showChild,
 }) => {
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
   const { showingTranslateValue } = useUtilsFunction();
+  const  axiosPublic = useAxiosPublic();
 
-  const handleClick = (e) => {
-    const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
-    if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
+
+  const handleToggle = async (id) => {
+    try {
+      const response = await axiosPublic.put(`/category/status/${id}`);
+      if (response.status === 200) {
+        notifySuccess("Status updated successfully!");
+        refetch(); // Refetch data after successful update
+      } else {
+        notifyError("Failed to update status.");
+      }
+    } catch (error) {
+      notifyError("Error updating status.");
     }
   };
 
@@ -75,10 +78,13 @@ const CategoryTable = ({
             </TableCell>
 
             <TableCell className="text-center">
-              <ShowHideButton
-                id={category?.id}
-                category
-                status={category.status}
+              <Switch
+                onChange={() => handleToggle(category?.id)}
+                checked={category?.status === 1}
+                onColor="#10B981" // Green for active
+                offColor="#EF4444" // Red for inactive
+                uncheckedIcon={false}
+                checkedIcon={false}
               />
             </TableCell>
             <TableCell>

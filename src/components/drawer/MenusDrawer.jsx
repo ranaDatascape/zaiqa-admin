@@ -7,12 +7,13 @@ import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 
-const MenusDrawer = () => {
+const MenusDrawer = ({refetch}) => {
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -22,6 +23,8 @@ const MenusDrawer = () => {
       if (response.status === 200 || response.status === 201) {
         notifySuccess("Menu Added Successfully!");
         closeDrawer();
+        refetch();
+        reset();
       }
     } catch (error) {
       notifyError(error.message || "Something went wrong!");

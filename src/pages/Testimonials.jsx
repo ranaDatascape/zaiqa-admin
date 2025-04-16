@@ -10,13 +10,13 @@ import AnimatedContent from "@/components/common/AnimatedContent";
 
 const Testimonials = () => {
   const { toggleDrawer } = useContext(SidebarContext);
-  const [data, isLoading] = useGetDatas("/testimonials/all", "testimonials");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/testimonials/all", "testimonials");
 
   return (
     <>
       <PageTitle>Testimonials</PageTitle>
       <MainDrawer>
-        <TestimonialsDrawer />
+        <TestimonialsDrawer refetch={refetch} />
       </MainDrawer>
 
       <AnimatedContent>
@@ -39,7 +39,7 @@ const Testimonials = () => {
               <TableCell>{"Delete"}</TableCell>
             </tr>
           </TableHeader>
-          <TestimonialsTable testimonials={data} isLoading={isLoading} />
+          <TestimonialsTable testimonials={data} isLoading={isLoading} refetch={refetch} />
         </Table>
       </TableContainer>
     </>

@@ -14,7 +14,7 @@ import { useState } from "react";
 import AnimatedContent from "@/components/common/AnimatedContent";
 
 const Review = () => {
-  const [data, isLoading] = useGetDatas("/review", "all-review");
+  const { data, isLoading, isError, error, refetch } = useGetDatas("/review", "all-review");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = data?.filter((item) =>

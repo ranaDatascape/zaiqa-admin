@@ -134,7 +134,7 @@ const SliderImagesDrawer = ({refetch}) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-40 relative">
               <LabelArea label="Status" />
               <div className="col-span-6 sm:col-span-4">
                 <select
