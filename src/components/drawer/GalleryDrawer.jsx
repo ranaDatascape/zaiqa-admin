@@ -6,9 +6,8 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { SidebarContext } from "@/context/SidebarContext";
 import LabelArea from "../form/selectOption/LabelArea";
-import InputArea from "../form/input/InputArea";
 
-const GalleryDrawer = () => {
+const GalleryDrawer = ({refetch}) => {
   const {
     register,
     handleSubmit,
@@ -55,7 +54,7 @@ const GalleryDrawer = () => {
         reset();
         closeDrawer();
         setPreview(null);
-        window.location.reload();
+        refetch();
       }
     } catch (error) {
       console.error("Gallery image creation failed:", error);

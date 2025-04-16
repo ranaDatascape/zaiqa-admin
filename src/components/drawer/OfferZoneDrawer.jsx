@@ -8,7 +8,7 @@ import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 import useGetDatas from "@/hooks/useGetDatas";
 
-const OfferZoneDrawer = () => {
+const OfferZoneDrawer = ({refetchData}) => {
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const { data, isLoading, isError, error, refetch } = useGetDatas("/products", "products");
@@ -24,6 +24,7 @@ const OfferZoneDrawer = () => {
       if (response.status === 200 || response.status === 201) {
         notifySuccess("Offer Added Successfully!");
         closeDrawer();
+        refetchData();
       }
     } catch (error) {
       notifyError(error.message || "Something went wrong!");

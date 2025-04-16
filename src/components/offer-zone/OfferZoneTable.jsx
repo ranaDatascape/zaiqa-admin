@@ -3,7 +3,7 @@ import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Status from "@/components/table/Status";
 
-const OfferZoneTable = ({ offersData, isLoading }) => {
+const OfferZoneTable = ({ offersData, isLoading , refetch }) => {
   if (isLoading) {
     return <TableRow>
       <TableCell colSpan={7}>

@@ -14,7 +14,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import { SidebarContext } from "@/context/SidebarContext";
 
-const CategoryDrawer = () => {
+const CategoryDrawer = ({refetchData}) => {
   const {data:category, isLoading , refetch} = useGetDatas(
     "/category/parent",
     "parentCategory"
@@ -99,12 +99,10 @@ const CategoryDrawer = () => {
         closeDrawer();
         setPreview(null);
         setFile(null);
-        refetch(); // ✅ Reload full page
+        refetchData();
       }
     } catch (error) {
       console.error("Banner creation failed:", error);
-      setMessage("Banner creation failed.");
-      notifyError("Banner creation failed.");
     }
   };
 
