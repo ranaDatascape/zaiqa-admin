@@ -1,12 +1,13 @@
 import {
   Avatar,
   Badge,
+  Button,
   TableBody,
   TableCell,
   TableRow,
 } from "@windmill/react-ui";
 import { t } from "i18next";
-import { FiZoomIn } from "react-icons/fi";
+import { FiTrash2, FiZoomIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 //internal import
@@ -19,9 +20,11 @@ import ShowHideButton from "@/components/table/ShowHideButton";
 import Tooltip from "@/components/tooltip/Tooltip";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
+import Swal from "sweetalert2";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { notifyError, notifySuccess } from "@/utils/toast";
 
 //internal import
-
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
@@ -37,6 +40,33 @@ const ProductTable = ({ products, isCheck, setIsCheck }) => {
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
+  };
+  const axiosPublic = useAxiosPublic();
+  // Handle delete
+  const handleDelete = async (id) => {
+    // Show confirmation dialog
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axiosPublic.delete(`/products/${id}`);
+          if (response?.status === 200) {
+            notifySuccess("Product deleted successfully!")
+          } else {
+            notifyError("Failed to delete product.");
+          }
+        } catch (error) {
+          notifyError("Error deleting product.");
+        }
+      }
+    });
   };
 
   return (
@@ -60,7 +90,7 @@ const ProductTable = ({ products, isCheck, setIsCheck }) => {
                 {product?.image ? (
                   <Avatar
                     className="hidden p-1 mr-2 md:block bg-gray-50 shadow-none"
-                    src={BASE_URL+product?.image}
+                    src={BASE_URL + product?.image}
                     alt="product"
                   />
                 ) : (
@@ -106,14 +136,22 @@ const ProductTable = ({ products, isCheck, setIsCheck }) => {
               )}
             </TableCell>
             <TableCell>
-              <EditDeleteButton
+              {/* <EditDeleteButton
                 id={product?.id}
                 product={product}
                 isCheck={isCheck}
                 handleUpdate={handleUpdate}
                 handleModalOpen={handleModalOpen}
                 title={showingTranslateValue(product?.title)}
-              />
+              /> */}
+              <Button
+                layout="link"
+                size="icon"
+                aria-label="Delete"
+                onClick={() => handleDelete(product?.id)} // Call handleDelete with SweetAlert2
+              >
+                <FiTrash2 className="text-red-500 text-2xl" />
+              </Button>
             </TableCell>
           </TableRow>
         ))}

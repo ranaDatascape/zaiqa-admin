@@ -8,11 +8,12 @@ import DrawerButton from "../form/button/DrawerButton";
 import Scrollbars from "react-custom-scrollbars-2";
 import LabelArea from "../form/selectOption/LabelArea";
 
-const PackageMappingDrawer = () => {
+const PackageMappingDrawer = ({refetch}) => {
   const {
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { isSubmitting },
   } = useForm();
 
@@ -29,6 +30,8 @@ console.log(productNames)
       if (res.status === 201 || res.status === 200) {
         notifySuccess("Package Mapping Added Successfully");
         closeDrawer();
+        reset();
+        refetch();
       }
     } catch (error) {
       notifyError(error?.response?.data?.message);

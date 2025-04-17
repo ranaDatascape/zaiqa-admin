@@ -70,6 +70,7 @@ const TestimonialsDrawer = ({refetch}) => {
         closeDrawer();
         setPreview(null);
         setFile(null);
+        refetch();
       }
     } catch (error) {
       console.error("Testimonial creation failed:", error);

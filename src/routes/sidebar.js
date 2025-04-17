@@ -60,10 +60,10 @@ const sidebar = [
         path: "/products",
         name: "Products",
       },   
-      {
-        path: "/coupons",
-        name: "Coupons",
-      },
+      // {
+      //   path: "/coupons",
+      //   name: "Coupons",
+      // },
     ],
   },
 

@@ -43,7 +43,7 @@ const Packages = () => {
     <>
       <PageTitle>{"Packages List"}</PageTitle>
       <MainDrawer>
-        <PackagesDrawer />
+        <PackagesDrawer refetch={refetch} />
       </MainDrawer>
       <AnimatedContent>
         <Card className="min-w-0 shadow-xs flex justify-between items-center overflow-hidden bg-white dark:bg-gray-800 mb-5">
