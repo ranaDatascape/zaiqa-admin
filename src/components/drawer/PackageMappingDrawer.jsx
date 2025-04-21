@@ -21,8 +21,7 @@ const PackageMappingDrawer = ({refetch}) => {
   const axiosPublic = useAxiosPublic();
 
   const {data:packageNames, isLoadingDetails} = useGetDatas("/packages", "packages");
-  const {data:productNames, isLoading} = useGetDatas("/products", "products");
-console.log(productNames)
+  const {data:productNames, isLoading} = useGetDatas("/products/lunchbox/all", "Lunchbox Products");
   const onSubmit = async (data) => {
     try {
       const res = await axiosPublic.post("/package-mapping/add", data);
@@ -82,7 +81,7 @@ console.log(productNames)
                   <option value="" defaultValue hidden>
                     Select Product Name
                   </option>
-                  {productNames?.rows?.map((data) => (
+                  {productNames?.data?.map((data) => (
                     <option key={data.id} value={data.id}>
                       {data.productName}
                     </option>

@@ -24,7 +24,7 @@ import { SidebarContext } from "@/context/SidebarContext";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 //internal import
 
-const ProductDrawer = ({ id }) => {
+const ProductDrawer = ({ id  , productsrefetch}) => {
   const { t } = useTranslation();
 
   const {
@@ -51,7 +51,12 @@ const ProductDrawer = ({ id }) => {
     "/category/parent",
     "category"
   );
-  const { data: subcategory , isError, error, refetch } = useGetDatas("/category", "subCategory");
+  const {
+    data: subcategory,
+    isError,
+    error,
+    refetch,
+  } = useGetDatas("/category", "subCategory");
   const { data: menus } = useGetDatas("/menus", "menus");
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
@@ -133,12 +138,14 @@ const ProductDrawer = ({ id }) => {
       data.image = imageUrl;
       const productData = {
         ...data,
+        menuId: data?.menuId || null,
         slug: data?.productName?.toLowerCase().split(" ").join("-"),
         image: imageUrl,
         tag: tag,
       };
       try {
         const res = await axiosPublic.post("/products/add", productData);
+        productsrefetch();
         if (res.status === 200 || res.status === 201) {
           notifySuccess("Product Added Successfully");
           closeDrawer();
@@ -266,6 +273,20 @@ const ProductDrawer = ({ id }) => {
                       ))}
                     </select>
                   )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <LabelArea label={t("Lunce Index")} />
+                <div className="col-span-8 sm:col-span-4">
+                  <select
+                    {...register("lunchIndex")}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="">Select a Lunch Index</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
                 </div>
               </div>
 

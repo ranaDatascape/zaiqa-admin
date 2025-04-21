@@ -34,6 +34,7 @@ import BulkActionDrawer from "@/components/drawer/BulkActionDrawer";
 import TableLoading from "@/components/preloader/TableLoading";
 // import SelectCategory from "@/components/form/selectOption/SelectCategory";
 import AnimatedContent from "@/components/common/AnimatedContent";
+import useGetDatas from "@/hooks/useGetDatas";
 
 const Products = () => {
   const { title, allId, serviceId, handleDeleteMany, handleUpdateMany } =
@@ -55,18 +56,19 @@ const Products = () => {
     limitData,
   } = useContext(SidebarContext);
 
-  const { data, loading, error } = useAsync(() =>
-    ProductServices.getAllProducts({
-      // page: currentPage,
-      // limit: limitData,
-      // category: category,
-      // title: searchText,
-      // price: sortedField,
-    })
-  );
+  // const { data, loading, error } = useAsync(() =>
+  //   ProductServices.getAllProducts({
+  //     // page: currentPage,
+  //     // limit: limitData,
+  //     // category: category,
+  //     // title: searchText,
+  //     // price: sortedField,
+  //   })
+  // );
+  const {data, isLoading, isError, error, refetch} = useGetDatas("/products/get/all" , "allProducts");
 
   // react hooks
-  const [isCheckAll, setIsCheckAll] = useState(false);
+  // const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
   // const handleSelectAll = () => {
@@ -99,7 +101,7 @@ const Products = () => {
       <DeleteModal ids={allId} setIsCheck={setIsCheck} title={title} />
       <BulkActionDrawer ids={allId} title="Products" />
       <MainDrawer>
-        <ProductDrawer id={serviceId} />
+        <ProductDrawer id={serviceId} productsrefetch={refetch} />
       </MainDrawer>
       <AnimatedContent>
         <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -205,7 +207,7 @@ const Products = () => {
         </Card>
       </AnimatedContent>
 
-      {loading ? (
+      {isLoading ? (
         <TableLoading row={12} col={7} width={160} height={20} />
       ) : error ? (
         <span className="text-center mx-auto text-red-500">{error}</span>
@@ -221,24 +223,25 @@ const Products = () => {
                 <TableCell>Sale Price</TableCell>
                 <TableCell>{t("QuntityTbl")}</TableCell>
                 <TableCell>{t("StatusTbl")}</TableCell>
-                <TableCell className="text-right">{t("ActionsTbl")}</TableCell>
+                <TableCell>{t("ActionsTbl")}</TableCell>
               </tr>
             </TableHeader>
             <ProductTable
               lang={lang}
+              refetch={refetch}
               isCheck={isCheck}
               products={data?.rows}
               setIsCheck={setIsCheck}
             />
           </Table>
-          <TableFooter>
+          {/* <TableFooter>
             <Pagination
               totalResults={data?.totalDoc}
               resultsPerPage={limitData}
               onChange={handleChangePage}
               label="Product Page Navigation"
             />
-          </TableFooter>
+          </TableFooter> */}
         </TableContainer>
       ) : (
         <NotFound title="Product" />
