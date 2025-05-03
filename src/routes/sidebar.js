@@ -14,9 +14,9 @@ import {
   FiImage,
   FiTrendingUp,
   FiBook,
-  FiNavigation
+  FiNavigation,
+  FiHome,
 } from "react-icons/fi";
-
 
 const sidebar = [
   {
@@ -25,19 +25,25 @@ const sidebar = [
     name: "Dashboard", // name that appear in Sidebar
   },
   {
-    path: "/banners",
-    icon: FiShoppingBag,
-    name: "Banners",
-  },
-  {
-    path: "/slider-images",
-    icon: FiImage,
-    name: "Slider Images",
-  },
-  {
-    path: '/gallery',
-    icon: FiImage,
-    name: 'Gallery',
+    icon: FiHome,
+    name: "Home",
+    routes: [
+      {
+        path: "/banners",
+        icon: FiShoppingBag,
+        name: "Banners",
+      },
+      {
+        path: "/slider-images",
+        icon: FiImage,
+        name: "Slider Images",
+      },
+      {
+        path: "/gallery",
+        icon: FiImage,
+        name: "Gallery",
+      },
+    ],
   },
   {
     path: "/about-us",
@@ -59,7 +65,7 @@ const sidebar = [
       {
         path: "/products",
         name: "Products",
-      },   
+      },
       // {
       //   path: "/coupons",
       //   name: "Coupons",
@@ -109,12 +115,12 @@ const sidebar = [
   {
     path: "/reviews",
     icon: FiTrendingUp,
-    name: "Review"
+    name: "Review",
   },
   {
-    path: '/testimonials',
+    path: "/testimonials",
     icon: FiNavigation,
-    name: 'Testimonials',
+    name: "Testimonials",
   },
   {
     path: "/menus",
@@ -122,17 +128,17 @@ const sidebar = [
     name: "Menus",
   },
 
-  {
-    path: "/our-staff",
-    icon: FiUser,
-    name: "OurStaff",
-  },
+  // {
+  //   path: "/our-staff",
+  //   icon: FiUser,
+  //   name: "OurStaff",
+  // },
 
-  {
-    path: "/settings?settingTab=common-settings",
-    icon: FiSettings,
-    name: "Settings",
-  },
+  // {
+  //   path: "/settings?settingTab=common-settings",
+  //   icon: FiSettings,
+  //   name: "Settings",
+  // },
 ];
 
 export default sidebar;
