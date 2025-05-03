@@ -20,6 +20,7 @@ const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 const ProductTable = ({ products, refetch }) => {
   const axiosPublic = useAxiosPublic();
   const [loading, setLoading] = useState(false);
+  console.log(products);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

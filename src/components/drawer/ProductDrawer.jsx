@@ -73,36 +73,7 @@ const ProductDrawer = ({ id, productsrefetch }) => {
       setPreview(URL.createObjectURL(selectedFile));
     }
   };
-  // const onSubmit = async (data) => {
-  //   const formData = new FormData();
-  //   // Append other fields
-  //   for (const key in data) {
-  //     if (key === "image" && data.image?.[0]) {
-  //       formData.append("image", data.image[0]);
-  //     } else {
-  //       formData.append(key, data[key]);
-  //     }
-  //   }
-  //   // Append the file separately
-  //   formData.append("menuId", Array.isArray(data.menuId) ? data.menuId.find(id => id && !isNaN(id)) || "" : data.menuId || "");
-  //   formData.append("slug", data.productName?.toLowerCase().split(" ").join("-"));
-  //   formData.append("tag", tag || "");
-  //   console.log("Form Data:", formData);
-  //   try {
-  //     const res = await axiosPublic.post("/products/add?type=products", formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
-  //     if (res.status === 200 || res.status === 201) {
-  //       notifySuccess("Product Added Successfully");
-  //       closeDrawer();
-  //       productsrefetch();
-  //       reset();
-  //     }
-  //   } catch (error) {
-  //     console.error("Upload error:", error);
-  //     notifyError("Failed to add product.");
-  //   }
-  // };
+
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -149,6 +120,51 @@ const ProductDrawer = ({ id, productsrefetch }) => {
       notifyError("Failed to add product.");
     }
   };
+
+
+
+
+
+
+
+
+
+
+  // const onSubmit = async (data) => {
+  //   const formData = new FormData();
+  //   // Append other fields
+  //   for (const key in data) {
+  //     if (key === "image" && data.image?.[0]) {
+  //       formData.append("image", data.image[0]);
+  //     } else {
+  //       formData.append(key, data[key]);
+  //     }
+  //   }
+  //   // Append the file separately
+  //   formData.append("menuId", Array.isArray(data.menuId) ? data.menuId.find(id => id && !isNaN(id)) || "" : data.menuId || "");
+  //   formData.append("lunchIndex", Array.isArray(data.lunchIndex) ? data.lunchIndex.find(id => id && !isNaN(id)) || "" : data.lunchIndex || "");
+
+  //   formData.append("slug", data.productName?.toLowerCase().split(" ").join("-"));
+  //   formData.append("tag", tag || "");
+  //   console.log("Form Data:", formData);
+  //   try {
+  //     const res = await axiosPublic.post("/products/add?type=products", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //     if (res.status === 200 || res.status === 201) {
+  //       notifySuccess("Product Added Successfully");
+  //       closeDrawer();
+  //       productsrefetch();
+  //       reset();
+  //     }
+  //   } catch (error) {
+  //     console.error("Upload error:", error);
+  //     notifyError("Failed to add product.");
+  //   }
+  // };
+
+
+
 
   const modules = {
     toolbar: [
@@ -273,15 +289,15 @@ const ProductDrawer = ({ id, productsrefetch }) => {
                 <LabelArea label={t("Lunch Index")} />
                 <div className="col-span-4 sm:col-span-4">
                   <select
-                    {...register("lunchIndex", {})}
+                    {...register("lunchIndex", { required: "Please select Lunch Index (Yes or No)" })}
                     className="w-full p-2 border border-gray-300 rounded-md"
                   >
-                    <option value="">Select a Lunch Index</option>
+                    <option value="">-- Select an option --</option>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                   </select>
                   {errors.lunchIndex && (
-                    <Error errorName={errors.lunchIndex.message} />
+                    <p className="text-red-500 text-xs italic mt-1">{errors.lunchIndex.message}</p>
                   )}
                 </div>
               </div>
