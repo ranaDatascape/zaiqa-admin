@@ -22,7 +22,7 @@ const Gallery = () => {
     <>
       <PageTitle>Gallery</PageTitle>
       <MainDrawer>
-        <GalleryDrawer />
+        <GalleryDrawer refetch={refetch} />
       </MainDrawer>
 
       <AnimatedContent>

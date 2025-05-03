@@ -22,23 +22,14 @@ import DrawerButton from "../form/button/DrawerButton";
 import { useForm } from "react-hook-form";
 import { SidebarContext } from "@/context/SidebarContext";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
+import Loading from "../preloader/Loading";
 //internal import
 
-const ProductDrawer = ({ id }) => {
+const ProductDrawer = ({ id, productsrefetch }) => {
   const { t } = useTranslation();
 
-  const {
-    tag,
-    setTag,
-    // register,
-    // onSubmit,
-    // errors,
-    slug,
-    // handleSubmit,
-    tapValue,
-    handleProductSlug,
-    // isSubmitting,
-  } = useProductSubmit(id);
+  const { tag, setTag, slug, tapValue, handleProductSlug } =
+    useProductSubmit(id);
 
   const {
     register,
@@ -51,15 +42,18 @@ const ProductDrawer = ({ id }) => {
     "/category/parent",
     "category"
   );
-  const { data: subcategory , isError, error, refetch } = useGetDatas("/category", "subCategory");
+  const {
+    data: subcategory,
+    isError,
+    error,
+    refetch,
+  } = useGetDatas("/category", "subCategory");
   const { data: menus } = useGetDatas("/menus", "menus");
   const { closeDrawer } = useContext(SidebarContext);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [description, setDescription] = useState("");
   const [returnPolicy, setReturnPolicy] = useState("");
-
-  console.log(category);
 
   const axiosPublic = useAxiosPublic();
 
@@ -80,75 +74,97 @@ const ProductDrawer = ({ id }) => {
     }
   };
 
-  //   // ✅ Upload Multiple Images Function
-  // const uploadImages = async (files) => {
-  //   if (!files || files.length === 0) {
-  //     setMessage("Please select images.");
-  //     return null;
-  //   }
 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    // Handle menuId safely
+    let menuIdValue = "";
+    if (Array.isArray(data.menuId)) {
+      // Get the first non-empty, numeric value
+      const validMenuId = data.menuId.find((id) => id && !isNaN(id));
+      if (validMenuId) menuIdValue = validMenuId;
+    } else if (data.menuId && !isNaN(data.menuId)) {
+      menuIdValue = data.menuId;
+    }
+
+    // Append all fields
+    for (const key in data) {
+      if (key === "image" && data.image?.[0]) {
+        formData.append("image", data.image[0]);
+      } else if (key !== "menuId") {
+        formData.append(key, data[key]);
+      }
+    }
+
+    formData.append("menuId", menuIdValue); // Only valid value or empty string
+    formData.append("slug",data.productName?.toLowerCase().split(" ").join("-"));
+    formData.append("tag", tag || "");
+
+    try {
+      const res = await axiosPublic.post(
+        "/products/add?type=products",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      if (res.status === 200 || res.status === 201) {
+        notifySuccess("Product Added Successfully");
+        closeDrawer();
+        productsrefetch();
+        reset();
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      notifyError("Failed to add product.");
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+  // const onSubmit = async (data) => {
   //   const formData = new FormData();
-  //   Array.from(files).forEach((file) => formData.append("images", file)); // Append multiple files
+  //   // Append other fields
+  //   for (const key in data) {
+  //     if (key === "image" && data.image?.[0]) {
+  //       formData.append("image", data.image[0]);
+  //     } else {
+  //       formData.append(key, data[key]);
+  //     }
+  //   }
+  //   // Append the file separately
+  //   formData.append("menuId", Array.isArray(data.menuId) ? data.menuId.find(id => id && !isNaN(id)) || "" : data.menuId || "");
+  //   formData.append("lunchIndex", Array.isArray(data.lunchIndex) ? data.lunchIndex.find(id => id && !isNaN(id)) || "" : data.lunchIndex || "");
 
+  //   formData.append("slug", data.productName?.toLowerCase().split(" ").join("-"));
+  //   formData.append("tag", tag || "");
+  //   console.log("Form Data:", formData);
   //   try {
-  //     const res = await axiosPublic.post(`/images/upload`, formData, {
+  //     const res = await axiosPublic.post("/products/add?type=products", formData, {
   //       headers: { "Content-Type": "multipart/form-data" },
   //     });
-
-  //     return res.data.imageUrls; // Expecting an array of URLs from backend
+  //     if (res.status === 200 || res.status === 201) {
+  //       notifySuccess("Product Added Successfully");
+  //       closeDrawer();
+  //       productsrefetch();
+  //       reset();
+  //     }
   //   } catch (error) {
-  //     console.error("Image upload failed:", error);
-  //     setMessage("Image upload failed.");
-  //     return null;
+  //     console.error("Upload error:", error);
+  //     notifyError("Failed to add product.");
   //   }
   // };
 
-  const uploadImage = async () => {
-    if (!file) {
-      notifyError("Please select an image.");
-      return null;
-    }
 
-    const formData = new FormData();
-    formData.append("image", file); // Append single file
 
-    try {
-      const res = await axiosPublic.post(`/images/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      return res.data.imageUrl; // Expecting a single URL from the backend
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      notifyError("Image upload failed.");
-      return null;
-    }
-  };
-
-  const onSubmit = async (data) => {
-    console.log(data);
-    const imageUrl = await uploadImage();
-
-    if (imageUrl) {
-      data.image = imageUrl;
-      const productData = {
-        ...data,
-        slug: data?.productName?.toLowerCase().split(" ").join("-"),
-        image: imageUrl,
-        tag: tag,
-      };
-      try {
-        const res = await axiosPublic.post("/products/add", productData);
-        if (res.status === 200 || res.status === 201) {
-          notifySuccess("Product Added Successfully");
-          closeDrawer();
-          reset();
-        }
-      } catch (error) {
-        notifyError("Failed to add product.");
-      }
-    }
-  };
 
   const modules = {
     toolbar: [
@@ -188,9 +204,9 @@ const ProductDrawer = ({ id }) => {
 
   if (isLoading) {
     return (
-      <div>
-        <h1>Loading............</h1>
-      </div>
+      <>
+        <Loading loading={isLoading} />
+      </>
     );
   }
 
@@ -270,6 +286,23 @@ const ProductDrawer = ({ id }) => {
               </div>
 
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <LabelArea label={t("Lunch Index")} />
+                <div className="col-span-4 sm:col-span-4">
+                  <select
+                    {...register("lunchIndex", { required: "Please select Lunch Index (Yes or No)" })}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="">-- Select an option --</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                  </select>
+                  {errors.lunchIndex && (
+                    <p className="text-red-500 text-xs italic mt-1">{errors.lunchIndex.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <LabelArea label={t("Product Name *")} />
                 <div className="col-span-8 sm:col-span-4">
                   <Input
@@ -294,7 +327,7 @@ const ProductDrawer = ({ id }) => {
                     placeholder={t("ProductCode")}
                     onBlur={(e) => handleProductSlug(e.target.value)}
                   />
-                  <Error errorName={errors.title} />
+                  <Error errorName={errors.productCode} />
                 </div>
               </div>
 
@@ -347,6 +380,7 @@ const ProductDrawer = ({ id }) => {
                 <div className="col-span-6 sm:col-span-4">
                   <input
                     type="file"
+                    {...register("image", { required: true })}
                     accept="image/*"
                     onChange={handleFileChange}
                     className="border border-gray-300 rounded-lg p-2 block w-full cursor-pointer"

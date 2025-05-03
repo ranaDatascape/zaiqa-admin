@@ -12,7 +12,7 @@ const ProductServices = {
   // },
 
   getAllProducts: async() =>{
-    return requests.get(`/products`)
+    return requests.get(`products/get/all`)
   },
 
   getProductById: async (id) => {

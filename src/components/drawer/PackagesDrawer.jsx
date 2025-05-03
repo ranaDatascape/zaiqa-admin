@@ -10,11 +10,12 @@ import { notifySuccess } from "@/utils/toast";
 import { SidebarContext } from "@/context/SidebarContext";
 import { Input } from "@windmill/react-ui";
 
-const PackagesDrawer = () => {
+const PackagesDrawer = ({ refetch }) => {
   const {
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { isSubmitting },
   } = useForm();
   const { closeDrawer } = useContext(SidebarContext);
@@ -23,11 +24,20 @@ const PackagesDrawer = () => {
   const [description, setDescription] = useState("");
 
   const onSubmit = async (data) => {
-    const packageData = { ...data, slug: data.name?.toLowerCase().replace(/[^A-Z0-9]+/gi, "-") };
-    const res = await axiosPublic.post("/packages/add", packageData);
-    if (res.status === 200 || res.status === 201) {
-      notifySuccess("Package Added Successfully");
-      closeDrawer();
+    const packageData = {
+      ...data,
+      slug: data.name?.toLowerCase().replace(/[^A-Z0-9]+/gi, "-"),
+    };
+    try {
+      const res = await axiosPublic.post("/packages/add", packageData);
+      if (res.status === 200 || res.status === 201) {
+        notifySuccess("Package added successfully!");
+        refetch();
+        closeDrawer();
+        reset();
+      }
+    } catch (error) {
+      console.error("Error adding package:", error);
     }
   };
 

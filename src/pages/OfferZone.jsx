@@ -23,7 +23,7 @@ const OfferZone = () => {
     <>
       <PageTitle>{"Offer Zone List"}</PageTitle>
       <MainDrawer>
-        <OfferZoneDrawer />
+        <OfferZoneDrawer refetchData={refetch} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -61,7 +61,7 @@ const OfferZone = () => {
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
-          <OfferZoneTable offersData={filteredData} isLoading={isLoading} />
+          <OfferZoneTable offersData={filteredData} isLoading={isLoading} refetch={refetch} />
         </Table>
       </TableContainer>
     </>

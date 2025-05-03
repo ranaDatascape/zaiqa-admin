@@ -33,7 +33,7 @@ const MappingPackage = () => {
     <>
       <PageTitle>{"Packages Mapping List"}</PageTitle>
       <MainDrawer>
-        <PackageMappingDrawer />
+        <PackageMappingDrawer refetch={refetch}/>
       </MainDrawer>
 
       <AnimatedContent>

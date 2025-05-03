@@ -50,7 +50,6 @@ const BannerDrawer = ({refetch}) => {
           formData.append(key, data[key]);
         }
       }
-
       const res = await axiosPublic.post("/banners/add?type=banners", formData ,{
         headers: { "Content-Type": "multipart/form-data" },
       });

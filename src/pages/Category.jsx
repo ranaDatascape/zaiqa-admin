@@ -3,16 +3,14 @@ import {
   Card,
   CardBody,
   Input,
-  Pagination,
   Table,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHeader,
 } from "@windmill/react-ui";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 //internal import
 
@@ -69,7 +67,7 @@ const Category = () => {
       <DeleteModal ids={allId} setIsCheck={setIsCheck} />
 
       <MainDrawer>
-        <CategoryDrawer id={serviceId} data={data} lang={lang} />
+        <CategoryDrawer id={serviceId} data={data} refetchData={refetch} lang={lang} />
       </MainDrawer>
 
       <AnimatedContent>
@@ -82,15 +80,6 @@ const Category = () => {
             >
               {/* </div> */}
               <div className="flex justify-start w-1/2 xl:w-1/2 md:w-full">
-                {/* <UploadMany
-                  title="Categories"
-                  exportData={getAllCategories}
-                  filename={filename}
-                  isDisabled={isDisabled}
-                  handleSelectFile={handleSelectFile}
-                  handleUploadMultiple={handleUploadMultiple}
-                  handleRemoveSelectFile={handleRemoveSelectFile}
-                /> */}
               </div>
 
               <div className="lg:flex  md:flex xl:justify-end xl:w-1/2  md:w-full md:justify-start flex-grow-0">
@@ -145,13 +134,6 @@ const Category = () => {
           </CardBody>
         </Card>
       </AnimatedContent>
-
-      {/* <SwitchToggleChildCat
-        title=" "
-        handleProcess={setShowChild}
-        processOption={showChild}
-        name={showChild}
-      /> */}
       {loading ? (
         <TableLoading row={12} col={6} width={190} height={20} />
       ) : error ? (
@@ -184,15 +166,6 @@ const Category = () => {
               showChild={showChild}
             />
           </Table>
-
-          {/* <TableFooter>
-            <Pagination
-              totalResults={totalResults}
-              resultsPerPage={resultsPerPage}
-              onChange={handleChangePage}
-              label="Table navigation"
-            />
-          </TableFooter> */}
         </TableContainer>
       ) : (
         <NotFound title="Sorry, There are no categories right now." />

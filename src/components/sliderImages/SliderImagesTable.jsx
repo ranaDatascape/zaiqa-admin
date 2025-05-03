@@ -1,30 +1,33 @@
-import useAxiosPublic from '@/hooks/useAxiosPublic';
-import { notifyError, notifySuccess } from '@/utils/toast';
-import { Button, TableBody, TableCell, TableRow } from '@windmill/react-ui'
-import React from 'react'
-import { FiTrash2 } from 'react-icons/fi';
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { notifyError, notifySuccess } from "@/utils/toast";
+import { Button, TableBody, TableCell, TableRow } from "@windmill/react-ui";
+import React from "react";
+import { FiTrash2 } from "react-icons/fi";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-const SliderImagesTable = ({data , isLoading , refetch})=> {
-    const axiosPublic = useAxiosPublic();
-    if(isLoading){
-        return <div>Loading...</div>
-    }
+const SliderImagesTable = ({ data, isLoading, refetch }) => {
+  const axiosPublic = useAxiosPublic();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    const handleDelete = async (id) => {
-        try {
-          const response = await axiosPublic.delete(`/slider-image/delete/${id}`);
-          if (response.status === 200) {
-            notifySuccess('Item deleted successfully.');
-            refetch();
-          } else {
-            notifyError('Failed to delete item.');
-          }
-        } catch (error) {
-          // notifyError('An error occurred while deleting the item.');
-        }
-      };
+  const handleDelete = async (id) => {
+    try {
+      const response = await axiosPublic.delete(`/slider-image/delete/${id}`);
+      if (response.status === 200) {
+        notifySuccess("Item deleted successfully.");
+        refetch();
+      }
+    } catch (error) {
+      console.error(error); // helpful for debugging
+      notifyError(
+        error.response?.data?.message ||
+          "An error occurred while deleting the item."
+      );
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -56,7 +59,7 @@ const SliderImagesTable = ({data , isLoading , refetch})=> {
                 <span className="text-sm">{item.status}</span>
               </TableCell>
               <TableCell>
-              <Button
+                <Button
                   layout="link"
                   size="icon"
                   aria-label="Delete"
@@ -70,9 +73,9 @@ const SliderImagesTable = ({data , isLoading , refetch})=> {
         </TableBody>
       ) : (
         <p className="text-center text-lg font-semibold">No data found!</p>
-      ) }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default SliderImagesTable
+export default SliderImagesTable;
