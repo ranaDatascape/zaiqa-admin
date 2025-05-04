@@ -74,31 +74,20 @@ const sidebar = [
   },
 
   {
-    path: "/customers",
-    icon: FiUsers,
-    name: "Customers",
-  },
-  {
-    path: "/booking",
-    icon: FiShoppingCart,
-    name: "Booking List",
-  },
-  {
     path: "/orders",
     icon: FiCompass,
     name: "Orders",
   },
-
   {
-    path: "/packages",
-    icon: FiPackage,
-    name: "Packages",
+    path: "/menus",
+    icon: FiMenu,
+    name: "Menus",
   },
 
   {
-    path: "/mapping-packages",
-    icon: FiPackage,
-    name: "Mapping Packages",
+    path: "/booking",
+    icon: FiShoppingCart,
+    name: "Booking List",
   },
 
   {
@@ -112,6 +101,29 @@ const sidebar = [
     icon: FiCoffee,
     name: "Offer Zone",
   },
+
+
+  {
+    path: "/customers",
+    icon: FiUsers,
+    name: "Customers",
+  },
+
+
+  {
+    path: "/packages",
+    icon: FiPackage,
+    name: "Packages",
+  },
+
+  {
+    path: "/mapping-packages",
+    icon: FiPackage,
+    name: "Mapping Packages",
+  },
+
+
+
   {
     path: "/reviews",
     icon: FiTrendingUp,
@@ -122,11 +134,7 @@ const sidebar = [
     icon: FiNavigation,
     name: "Testimonials",
   },
-  {
-    path: "/menus",
-    icon: FiMenu,
-    name: "Menus",
-  },
+
 
   // {
   //   path: "/our-staff",
