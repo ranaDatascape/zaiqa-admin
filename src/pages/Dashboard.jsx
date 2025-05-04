@@ -327,7 +327,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 my-8">
+        {/* <div className="grid gap-4 md:grid-cols-2 my-8">
           <ChartCard
             mode={mode}
             loading={loadingOrderAmount}
@@ -343,14 +343,14 @@ const Dashboard = () => {
           >
             <PieChart data={bestSellerProductChart} />
           </ChartCard>
-        </div>
+        </div> */}
       </AnimatedContent>
 
-      <PageTitle>{t("RecentOrder")}</PageTitle>
+      {/* <PageTitle>{t("RecentOrder")}</PageTitle> */}
 
       {/* <Loading loading={loading} /> */}
 
-      {loadingRecentOrder ? (
+      {/* {loadingRecentOrder ? (
         <TableLoading row={5} col={4} />
       ) : error ? (
         <span className="text-center mx-auto text-red-500">{error}</span>
@@ -383,7 +383,7 @@ const Dashboard = () => {
         </TableContainer>
       ) : (
         <NotFound title="Sorry, There are no orders right now." />
-      )}
+      )} */}
     </>
   );
 };
