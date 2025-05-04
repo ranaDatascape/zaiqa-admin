@@ -12,12 +12,26 @@ import useUtilsFunction from "@/hooks/useUtilsFunction";
 import PrintReceipt from "@/components/form/others/PrintReceipt";
 import SelectStatus from "@/components/form/selectOption/SelectStatus";
 
+const dateFormat = (date) => {
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+
+  let hour = d.getHours();
+  const min = String(d.getMinutes()).padStart(2, "0");
+  const ampm = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12;
+  hour = hour ? hour : 12; // the hour '0' should be '12'
+  const hourStr = String(hour).padStart(2, "0");
+
+  return `${day}/${month}/${year}, ${hourStr}:${min} ${ampm}`;
+};
+
 const OrderTable = ({ orders }) => {
   // console.log('globalSetting',globalSetting)
   const { t } = useTranslation();
-  const { showDateTimeFormat, currency, getNumberTwo } = useUtilsFunction();
-
-  // console.log('orders',orders)
+  const { getNumberTwo } = useUtilsFunction();
 
   return (
     <>
@@ -32,7 +46,7 @@ const OrderTable = ({ orders }) => {
 
             <TableCell>
               <span className="text-sm">
-                {showDateTimeFormat(order?.updatedDate)}
+                {dateFormat(order?.createdAt)}
               </span>
             </TableCell>
 
@@ -49,7 +63,7 @@ const OrderTable = ({ orders }) => {
             <TableCell>
               <span className="text-sm font-semibold">
                 {getNumberTwo(order?.total)}
-              </span>
+              </span>৳
             </TableCell>
 
             <TableCell className="text-xs">
