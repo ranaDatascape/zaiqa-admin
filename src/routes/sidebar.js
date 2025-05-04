@@ -54,10 +54,10 @@ const sidebar = [
     icon: FiSlack,
     name: "Catalog",
     routes: [
-      {
-        path: "/attributes",
-        name: "Attributes",
-      },
+      // {
+      //   path: "/attributes",
+      //   name: "Attributes",
+      // },
       {
         path: "/categories",
         name: "Categories",
