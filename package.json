@@ -31,6 +31,7 @@
     "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.0.2",
     "immutability-helper": "^3.1.1",
+    "immutable": "^5.1.1",
     "js-cookie": "^3.0.5",
     "local-storage": "^2.0.0",
     "million": "^2.2.1",

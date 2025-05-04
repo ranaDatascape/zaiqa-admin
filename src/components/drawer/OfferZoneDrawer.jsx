@@ -56,7 +56,7 @@ const OfferZoneDrawer = ({refetchData}) => {
                   <option value="">Select Product</option>
                   {data?.rows?.map((product, i) => (
                     <option key={i} value={product.id}>
-                      {product?.productName}
+                      {product.productName} - {product.salesPrice }৳
                     </option>
                   ))}
                 </Select>
