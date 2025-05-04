@@ -77,28 +77,21 @@ const ProductDrawer = ({ id, productsrefetch }) => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    // Handle menuId safely
-    let menuIdValue = "";
-    if (Array.isArray(data.menuId)) {
-      // Get the first non-empty, numeric value
-      const validMenuId = data.menuId.find((id) => id && !isNaN(id));
-      if (validMenuId) menuIdValue = validMenuId;
-    } else if (data.menuId && !isNaN(data.menuId)) {
-      menuIdValue = data.menuId;
-    }
-
-    // Append all fields
     for (const key in data) {
       if (key === "image" && data.image?.[0]) {
         formData.append("image", data.image[0]);
-      } else if (key !== "menuId") {
+      }
+      else if (key === "menuId") {
+        const menuId = data.menuId;
+        if (menuId && !isNaN(menuId) && Number(menuId) > 0) {
+          formData.append("menuId", menuId);
+        }
+        // else skip appending menuId (so backend defaults it to null)
+      }
+      else {
         formData.append(key, data[key]);
       }
     }
-
-    formData.append("menuId", menuIdValue); // Only valid value or empty string
-    formData.append("slug",data.productName?.toLowerCase().split(" ").join("-"));
-    formData.append("tag", tag || "");
 
     try {
       const res = await axiosPublic.post(
