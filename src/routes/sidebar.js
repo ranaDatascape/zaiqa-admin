@@ -17,6 +17,7 @@ import {
   FiNavigation,
   FiHome,
 } from "react-icons/fi";
+import { IoFastFoodSharp } from "react-icons/io5";
 
 const sidebar = [
   {
@@ -49,6 +50,11 @@ const sidebar = [
     path: "/about-us",
     icon: FiBook,
     name: "AboutUS",
+  },
+  {
+    path: "/event-catering",
+    icon: IoFastFoodSharp,
+    name: "Event Catering",
   },
   {
     icon: FiSlack,
