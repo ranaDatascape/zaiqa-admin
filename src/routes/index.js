@@ -13,6 +13,7 @@ const MappingPackage = lazy(() => import("@/pages/MappingPackage"));
 const Category = lazy(() => import("@/pages/Category"));
 const Menus = lazy(() => import("@/pages/Menus"));
 const OfferZone = lazy(() => import("@/pages/OfferZone"));
+const EventCatering = lazy(() => import("@/pages/EventCatering"));
 const ChildCategory = lazy(() => import("@/pages/ChildCategory"));
 const Staff = lazy(() => import("@/pages/Staff"));
 const Customers = lazy(() => import("@/pages/Customers"));
@@ -76,6 +77,10 @@ const routes = [
   {
     path: "/categories",
     component: Category,
+  },
+  {
+    path: "/event-catering",
+    component: EventCatering,
   },
   {
     path: "/languages",
@@ -183,10 +188,11 @@ const routeAccessList = [
   { label: "Gallery", value: "gallery" },
   { label: "Slider Images", value: "slider-images" },
   { label: "Products", value: "products" },
-  {label : "Packages", value: "packages"},
+  { label: "Packages", value: "packages"},
   { label: "Categories", value: "categories" },
   { label: "Booking", value: "booking" },
   { label: "Daily Deals", value: "daily-deals" },
+  { label: "Event Catering", value: "event-catering" },
   { label: "Offer Zone", value: "offer-zone" },
   { label: "Review" , value: "review"},
   { label: "Testimonials", value: "testimonials" },
