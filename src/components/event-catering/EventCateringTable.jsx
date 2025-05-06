@@ -92,14 +92,14 @@ const   EventCateringTable = ({ eventsData, isLoading, refetch }) => {
                 </Badge>
               </TableCell>
               <TableCell>
-                <div className="flex justify-end text-right">
-                  <div className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
+                <div className="flex gap-4">
+                  <div className="cursor-pointer text-gray-400 hover:text-green-600">
                     <FiEdit
                       onClick={() => handleUpdate(event.id)}
                       className="text-xl"
                     />
                   </div>
-                  <div className="p-2 cursor-pointer text-gray-400 hover:text-red-600">
+                  <div className="cursor-pointer text-gray-400 hover:text-red-600">
                     <FiTrash2
                       onClick={() => {
                         handleDelete(event.id)
