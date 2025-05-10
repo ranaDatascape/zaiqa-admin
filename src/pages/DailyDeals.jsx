@@ -86,7 +86,7 @@ const DailyDeals = () => {
                 <TableCell>{"Actions"}</TableCell>
               </tr>
             </TableHeader>
-            <DailyDealsTable dailyDealsData={filteredData} isLoading={isLoading} />
+            <DailyDealsTable dailyDealsData={filteredData} isLoading={isLoading} refetchData={refetch} />
           </Table>
         </TableContainer>
       </AnimatedContent>
