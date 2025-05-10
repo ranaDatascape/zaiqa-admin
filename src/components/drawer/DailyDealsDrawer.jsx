@@ -8,13 +8,14 @@ import { SidebarContext } from "@/context/SidebarContext";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import Scrollbars from "react-custom-scrollbars-2";
 
-const DailyDealsDrawer = ({refetch}) => {
+const DailyDealsDrawer = ({ refetch }) => {
   const { data, isLoading, isError, error } = useGetDatas("/products", "products");
   const axiosPublic = useAxiosPublic();
   const { closeDrawer } = useContext(SidebarContext);
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -26,17 +27,18 @@ const DailyDealsDrawer = ({refetch}) => {
         notifySuccess("Daily Deal Added Successfully!");
         closeDrawer();
         refetch();
+        reset();
       }
     } catch (error) {
       notifyError(error.message || "Something went wrong!");
     }
   };
-  if(isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full h-full p-6">
       <h2 className="text-2xl font-medium mb-6">Add Daily Deals</h2>
-      <Scrollbars 
+      <Scrollbars
         autoHide
         autoHideTimeout={1000}
         autoHideDuration={200}
@@ -48,66 +50,66 @@ const DailyDealsDrawer = ({refetch}) => {
             <div className="grid gap-4">
               <Label>
                 <span>Product Name</span>
-                <Select 
+                <Select
                   className="mt-1"
                   {...register("productId", { required: "Product is required" })}
                 >
                   <option value="">Select Product</option>
                   {data?.rows?.map((product, i) => (
                     <option key={i} value={product.id}>
-                      {product.productName} - {product.salesPrice }৳
+                      {product.productName} - {product.salesPrice}৳
                     </option>
                   ))}
                 </Select>
               </Label>
-  
+
               <Label>
                 <span>Deal Price</span>
                 <Input
                   className="mt-1"
                   type="number"
                   placeholder="Enter deal price"
-                  {...register("price", { 
+                  {...register("price", {
                     required: "Deal price is required",
                     min: { value: 0, message: "Price cannot be negative" }
                   })}
                 />
               </Label>
-  
+
               <Label>
                 <span>Quantity</span>
                 <Input
                   className="mt-1"
                   type="number"
                   placeholder="Enter deal quantity"
-                  {...register("quantity", { 
+                  {...register("quantity", {
                     required: "Quantity is required",
                     min: { value: 1, message: "Quantity must be at least 1" }
                   })}
                 />
               </Label>
-  
+
               <Label>
                 <span>Start Date</span>
-                <Input 
-                  className="mt-1" 
+                <Input
+                  className="mt-1"
                   type="datetime-local"
                   {...register("startTime", { required: "Start date is required" })}
                 />
               </Label>
-  
+
               <Label>
                 <span>End Date</span>
-                <Input 
-                  className="mt-1" 
+                <Input
+                  className="mt-1"
                   type="datetime-local"
                   {...register("endTime", { required: "End date is required" })}
                 />
               </Label>
-  
+
               <Label>
                 <span>Status</span>
-                <Select 
+                <Select
                   className="mt-1"
                   {...register("status", { required: "Status is required" })}
                 >

@@ -1,9 +1,41 @@
-import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
+import { Button, TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import React from "react";
 import EditDeleteButton from "../table/EditDeleteButton";
+import { FiTrash2 } from "react-icons/fi";
+import Swal from "sweetalert2";
+import { notifyError, notifySuccess } from "@/utils/toast";
 
-const BookingTable = ({ BookingList = [], isLoading , refetch}) => {
+const BookingTable = ({ BookingList = [], isLoading, refetch }) => {
   console.log("Booking List", BookingList);
+
+   // Handle delete
+   const handleDelete = async (id) => {
+    // Show confirmation dialog
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axiosPublic.delete(`/booking/delete/${id}`);
+          if (response.status === 200) {
+            notifySuccess("Booking deleted successfully!");
+            refetch();// Reload full page after successful delete
+          } else {
+            notifyError("Failed to delete booking.");
+          }
+        } catch (error) {
+          notifyError("Error deleting booking.");
+          console.error("Error deleting booking:", error);
+        }
+      }
+    });
+  };
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -62,9 +94,11 @@ const BookingTable = ({ BookingList = [], isLoading , refetch}) => {
           </TableCell>
 
           <TableCell>
-            <EditDeleteButton
-              id={booking?.id}
-            />
+            <Button
+              onClick={() => handleDelete(booking.id)}
+              className="p-2 cursor-pointer text-gray-400 hover:text-red-600">
+              <FiTrash2 />
+            </Button>
           </TableCell>
         </TableRow>
       ))}
