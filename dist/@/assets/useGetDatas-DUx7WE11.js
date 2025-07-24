@@ -1,0 +1,1 @@
+import{C as u,r as x,S as b,b as p}from"./index-Cv0MCJep.js";const d=u.create({baseURL:"http://localhost:5055/api"}),l=()=>d,C=(s,t)=>{const a=l(),{isUpdate:e}=x.useContext(b),{data:r=[],isLoading:o,isError:c,error:i,refetch:n}=p({queryKey:[t,e],queryFn:async()=>(await a(s)).data});return{data:r,isLoading:o,isError:c,error:i,refetch:n}};export{C as a,l as u};
