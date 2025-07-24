@@ -34,7 +34,7 @@ const ReviewTable = ({ reviewData, isLoading }) => {
             <TableCell>
               <ReviewStatus id={review?.id} review={review} />
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
               <div className="flex justify-center items-center space-x-4">
                 <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
                   <FiEdit />
@@ -43,7 +43,7 @@ const ReviewTable = ({ reviewData, isLoading }) => {
                   <FiTrash2 />
                 </button>
               </div>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

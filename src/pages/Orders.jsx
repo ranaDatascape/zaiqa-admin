@@ -174,7 +174,7 @@ const Orders = () => {
                     <option value="30">{t("DaysOrders30")}</option>
                   </Select>
                 </div>
-                <div>
+                {/* <div>
                   <Select onChange={(e) => setMethod(e.target.value)}>
                     <option value="Method" defaultValue hidden>
                       {t("Method")}
@@ -184,7 +184,7 @@ const Orders = () => {
                     <option value="Card">{t("Card")}</option>
                     <option value="Credit">{t("Credit")}</option>
                   </Select>
-                </div>
+                </div> */}
                 <div>
                   {loadingExport ? (
                     <Button
@@ -296,7 +296,7 @@ const Orders = () => {
       ) : error ? (
         <span className="text-center mx-auto text-red-500">{error}</span>
       ) : serviceData?.length !== 0 ? (
-        <TableContainer className="mb-8 dark:bg-gray-900">
+        <TableContainer className="mb-8 dark:bg-gray-900 overflow-y-auto">
           <Table>
             <TableHeader>
               <tr>

@@ -208,7 +208,7 @@ const Header = () => {
 
             {/* <!-- Notifications menu --> */}
             <li className="relative inline-block text-left" ref={nRef}>
-              <button
+              {/* <button
                 className="relative align-middle rounded-md focus:outline-none"
                 onClick={handleNotificationOpen}
               >
@@ -220,7 +220,7 @@ const Header = () => {
                 <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-medium leading-none text-red-100 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
                   {totalUnreadDoc}
                 </span>
-              </button>
+              </button> */}
 
               {notificationOpen && (
                 <div className="origin-top-right absolute md:right-0 -right-3 top-2 rounded-md shadow-lg bg-white dark:bg-gray-800  focus:outline-none">

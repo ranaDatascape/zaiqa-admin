@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 
 import { useTranslation } from "react-i18next";
-import { FiZoomIn } from "react-icons/fi";
+import { FiZoomIn, FiPrinter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 //internal import
@@ -76,14 +76,14 @@ const OrderTable = ({ orders }) => {
 
             <TableCell className="text-right flex justify-end">
               <div className="flex justify-between items-center">
-                <PrintReceipt orderId={order.id} />
+                {/* <PrintReceipt orderId={order.id} /> */}
 
                 <span className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600">
                   <Link to={`/order/${order.id}`}>
                     <Tooltip
                       id="view"
-                      Icon={FiZoomIn}
-                      title={t("ViewInvoice")}
+                      Icon={FiPrinter}
+                      title={("View Invoice & Print")}
                       bgColor="#059669"
                     />
                   </Link>

@@ -7,11 +7,15 @@ import { Button, Card, CardBody, Input, Table, TableCell, TableContainer, TableH
 import { SidebarContext } from "@/context/SidebarContext";
 import { FiPlus } from "react-icons/fi";
 import useGetDatas from "@/hooks/useGetDatas";
+import useToggleDrawer from "@/hooks/useToggleDrawer";
+import DeleteModal from "@/components/modal/DeleteModal";
 
 const OfferZone = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isCheck, setIsCheck] = useState([]);
   const { data, isLoading, isError, error, refetch } = useGetDatas("/offer-zone", "offer-zone");
+  const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
 
   const filteredData = data?.filter((item) =>
     Object.values(item).some((value) =>
@@ -22,6 +26,9 @@ const OfferZone = () => {
   return (
     <>
       <PageTitle>{"Offer Zone List"}</PageTitle>
+      
+      <DeleteModal id={serviceId} title={title} setIsCheck={setIsCheck} />
+      
       <MainDrawer>
         <OfferZoneDrawer refetchData={refetch} />
       </MainDrawer>
@@ -53,6 +60,7 @@ const OfferZone = () => {
         <Table>
           <TableHeader>
             <tr>
+              <TableCell>Select</TableCell>
               <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Title</TableCell>
@@ -61,7 +69,15 @@ const OfferZone = () => {
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
-          <OfferZoneTable offersData={filteredData} isLoading={isLoading} refetch={refetch} />
+          <OfferZoneTable 
+            offersData={filteredData} 
+            isLoading={isLoading} 
+            refetch={refetch}
+            handleUpdate={handleUpdate}
+            handleModalOpen={handleModalOpen}
+            isCheck={isCheck}
+            setIsCheck={setIsCheck}
+          />
         </Table>
       </TableContainer>
     </>

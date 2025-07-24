@@ -55,18 +55,18 @@ const CardItemTwo = ({
                     </p>
                   </div>
                   <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
-                    <div className="px-1 mt-3">
+                    {/* <div className="px-1 mt-3">
                       {t("Cash")} : {currency}
                       {getNumberTwo(cash)}
-                    </div>
-                    <div className="px-1 mt-3">
+                    </div> */}
+                    {/* <div className="px-1 mt-3">
                       {t("Card")} : {currency}
                       {getNumberTwo(card)}
-                    </div>
-                    <div className="px-1 mt-3">
+                    </div> */}
+                    {/* <div className="px-1 mt-3">
                       {t("Credit")} : {currency}
                       {getNumberTwo(credit)}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </CardBody>

@@ -14,6 +14,7 @@ const EditDeleteButton = ({
   product,
   parent,
   children,
+  showEdit = false,
 }) => {
   const { t } = useTranslation();
   return (
@@ -33,6 +34,23 @@ const EditDeleteButton = ({
               />
             </Link>
 
+            {showEdit && (
+              <button
+                disabled={isCheck?.length > 0}
+                onClick={() => handleUpdate(id)}
+                className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600 focus:outline-none"
+              >
+                <Tooltip
+                  id="edit"
+                  Icon={FiEdit}
+                  title={t("Edit")}
+                  bgColor="#10B981"
+                />
+              </button>
+            )}
+          </>
+        ) : (
+          showEdit && (
             <button
               disabled={isCheck?.length > 0}
               onClick={() => handleUpdate(id)}
@@ -45,20 +63,7 @@ const EditDeleteButton = ({
                 bgColor="#10B981"
               />
             </button>
-          </>
-        ) : (
-          <button
-            disabled={isCheck?.length > 0}
-            onClick={() => handleUpdate(id)}
-            className="p-2 cursor-pointer text-gray-400 hover:text-emerald-600 focus:outline-none"
-          >
-            <Tooltip
-              id="edit"
-              Icon={FiEdit}
-              title={t("Edit")}
-              bgColor="#10B981"
-            />
-          </button>
+          )
         )}
 
         <button

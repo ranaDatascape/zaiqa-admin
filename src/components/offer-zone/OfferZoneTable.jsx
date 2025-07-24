@@ -2,11 +2,28 @@ import React from 'react';
 import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Status from "@/components/table/Status";
+import EditDeleteButton from '../table/EditDeleteButton';
+import CheckBox from '../form/others/CheckBox';
 
-const OfferZoneTable = ({ offersData, isLoading , refetch }) => {
+const OfferZoneTable = ({ offersData, isLoading, refetch, handleUpdate, handleModalOpen, isCheck, setIsCheck }) => {
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+  };
+
+  // Debug: Log the first offer to see the data structure
+  if (offersData && offersData.length > 0) {
+    console.log('First offer data:', offersData[0]);
+    console.log('Offer ID:', offersData[0]?.id);
+    console.log('All offer IDs:', offersData.map(offer => offer?.id));
+  }
+
   if (isLoading) {
     return <TableRow>
-      <TableCell colSpan={7}>
+      <TableCell colSpan={8}>
         <div className="text-center">Loading...</div>
       </TableCell>
     </TableRow>;
@@ -17,6 +34,15 @@ const OfferZoneTable = ({ offersData, isLoading , refetch }) => {
       {offersData?.map((offer, i) => (
         <TableRow key={i}>
           <TableCell>
+            <CheckBox
+              type="checkbox"
+              name={offer?.product?.productName}
+              id={offer?.id}
+              handleClick={handleClick}
+              isChecked={isCheck?.includes(offer?.id)}
+            />
+          </TableCell>
+          <TableCell>
             <span className="text-sm">{i + 1}</span>
           </TableCell>
           <TableCell>
@@ -26,20 +52,23 @@ const OfferZoneTable = ({ offersData, isLoading , refetch }) => {
             <span className="text-sm font-medium">{offer?.product?.title}</span>
           </TableCell>
           <TableCell>
-            <span className="text-sm">{offer?.offerPrice}%</span>
+            <span className="text-sm">{offer?.offerPrice}৳</span>
           </TableCell>
           <TableCell>
             <Status status={offer?.status} />
           </TableCell>
           <TableCell>
-            <div className="flex justify-center items-center space-x-4">
-              <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
-                <FiEdit />
-              </button>
-              <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600">
-                <FiTrash2 />
-              </button>
-            </div>
+            <EditDeleteButton
+              id={offer?.id}
+              title={offer?.product?.productName || offer?.product?.title}
+              handleUpdate={handleUpdate}
+              handleModalOpen={(id, title, product) => {
+                console.log('Delete clicked with ID:', id);
+                console.log('Offer data:', offer);
+                handleModalOpen(id, title, product);
+              }}
+              isCheck={isCheck}
+            />
           </TableCell>
         </TableRow>
       ))}

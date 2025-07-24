@@ -4,7 +4,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Status from "@/components/table/Status";
 import EditDeleteButton from '../table/EditDeleteButton';
 
-const MenusTable = ({ menusData, isLoading }) => {
+const MenusTable = ({ menusData, isLoading, handleUpdate, handleModalOpen }) => {
   if (isLoading) {
     return <TableRow>
       <TableCell colSpan={6}>
@@ -30,10 +30,13 @@ const MenusTable = ({ menusData, isLoading }) => {
             <Status status={menu.status} />
           </TableCell>
           <TableCell>
-          <EditDeleteButton
-                id={menu?.id}
-                menu={menu}
-              />
+            <EditDeleteButton
+              id={menu?.id}
+              title={menu?.name}
+              handleUpdate={handleUpdate}
+              handleModalOpen={handleModalOpen}
+              showEdit={false}
+            />
           </TableCell>
         </TableRow>
       ))}

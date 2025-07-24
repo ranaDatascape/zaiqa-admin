@@ -1,2 +1,2 @@
 
-This is updated version of kachabazar-admin
+This is updated version of Zaiqa-admin

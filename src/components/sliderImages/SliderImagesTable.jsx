@@ -56,7 +56,7 @@ const SliderImagesTable = ({ data, isLoading, refetch }) => {
                 <span className="text-sm">{item.link}</span>
               </TableCell>
               <TableCell>
-                <span className="text-sm">{item.status}</span>
+                <span className="text-sm text-green-500">{item.status}</span>
               </TableCell>
               <TableCell>
                 <Button

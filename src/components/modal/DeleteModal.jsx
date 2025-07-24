@@ -17,6 +17,8 @@ import ProductServices from "@/services/ProductServices";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
 import AttributeServices from "@/services/AttributeServices";
 import CurrencyServices from "@/services/CurrencyServices";
+import MenuServices from "@/services/MenuServices";
+import OfferZoneServices from "@/services/OfferZoneServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import useDisableForDemo from "@/hooks/useDisableForDemo";
 
@@ -223,6 +225,48 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         } else {
           const res = await CurrencyServices.deleteCurrency(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+      }
+
+      if (location.pathname === "/menus") {
+        if (ids) {
+          const res = await MenuServices.deleteManyMenus({
+            ids: ids,
+          });
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setIsCheck([]);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        } else {
+          const res = await MenuServices.deleteMenu(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+      }
+
+      if (location.pathname === "/offer-zone") {
+        if (ids) {
+          const res = await OfferZoneServices.deleteManyOffers({
+            ids: ids,
+          });
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setIsCheck([]);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        } else {
+          const res = await OfferZoneServices.deleteOffer(id);
           setIsUpdate(true);
           notifySuccess(res.message);
           setServiceId();

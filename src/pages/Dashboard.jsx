@@ -327,7 +327,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 my-8">
+        {/* <div className="grid gap-4 md:grid-cols-2 my-8">
           <ChartCard
             mode={mode}
             loading={loadingOrderAmount}
@@ -343,7 +343,7 @@ const Dashboard = () => {
           >
             <PieChart data={bestSellerProductChart} />
           </ChartCard>
-        </div>
+        </div> */}
       </AnimatedContent>
 
       {/* <PageTitle>{t("RecentOrder")}</PageTitle> */}

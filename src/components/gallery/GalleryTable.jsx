@@ -2,14 +2,14 @@ import React from "react";
 import { TableCell, TableRow, TableBody, Button } from "@windmill/react-ui";
 import { FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
-import Switch  from "react-switch";
+import Switch from "react-switch";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-const GalleryTable = ({ galleries, isLoading ,refetch }) => {
-    const axiosPublic = useAxiosPublic();
+const GalleryTable = ({ galleries, isLoading, refetch }) => {
+  const axiosPublic = useAxiosPublic();
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -21,7 +21,7 @@ const GalleryTable = ({ galleries, isLoading ,refetch }) => {
 
       if (response.status === 200) {
         notifySuccess("Status updated successfully!");
-        refetch()
+        refetch();
       } else {
         notifyError("Failed to update status.");
       }
@@ -48,7 +48,7 @@ const GalleryTable = ({ galleries, isLoading ,refetch }) => {
           const response = await axiosPublic.delete(`/gallery/delete/${id}`);
           if (response.status === 200) {
             notifySuccess("Image deleted successfully!");
-            refetch() // Reload full page after successful delete
+            refetch(); // Reload full page after successful delete
           } else {
             notifyError("Failed to delete banner.");
           }
@@ -91,28 +91,36 @@ const GalleryTable = ({ galleries, isLoading ,refetch }) => {
               </div>
             </TableCell>
             <TableCell>
-              <span>{gallery?.status}</span>
+              <span
+                style={{
+                  color: gallery.status === "Active" ? "#10B981" : "#EF4444", // Green for active, Red for inactive
+                  fontWeight: "bold",
+                }}
+              >
+                {gallery.status}
+              </span>
             </TableCell>
             <TableCell>
-            <Switch
-                  onChange={() => handleToggle(gallery.id)}
-                  checked={gallery.status === "Active"}
-                  onColor="#10B981" // Green for active
-                  offColor="#EF4444" // Red for inactive
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                />
+              <Switch
+                onChange={() => handleToggle(gallery.id)}
+                checked={gallery.status === "Active"}
+                onColor="#10B981" // Green for active
+                offColor="#EF4444" // Red for inactive
+                uncheckedIcon={false}
+                checkedIcon={false}
+              />
             </TableCell>
+
             <TableCell>
-                <Button
-                  layout="link"
-                  size="icon"
-                  aria-label="Delete"
-                  onClick={() => handleDelete(gallery?.id)} // Call handleDelete with SweetAlert2
-                >
-                  <FiTrash2 className="text-red-500 text-2xl" />
-                </Button>
-              </TableCell>
+              <Button
+                layout="link"
+                size="icon"
+                aria-label="Delete"
+                onClick={() => handleDelete(gallery?.id)} // Call handleDelete with SweetAlert2
+              >
+                <FiTrash2 className="text-red-500 text-2xl" />
+              </Button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

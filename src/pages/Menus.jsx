@@ -7,11 +7,14 @@ import { Button, Card, CardBody, Input, Table, TableCell, TableContainer, TableH
 import { SidebarContext } from "@/context/SidebarContext";
 import { FiPlus } from "react-icons/fi";
 import useGetDatas from "@/hooks/useGetDatas";
+import useToggleDrawer from "@/hooks/useToggleDrawer";
+import DeleteModal from "@/components/modal/DeleteModal";
 
 const Menus = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const [searchQuery, setSearchQuery] = useState("");
   const { data, isLoading, isError, error, refetch } = useGetDatas("/menus/", "menus");
+  const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
 
   const filteredData = data?.filter((item) =>
     Object.values(item).some((value) =>
@@ -22,8 +25,11 @@ const Menus = () => {
   return (
     <>
       <PageTitle>{"Menus List"}</PageTitle>
+      
+      <DeleteModal id={serviceId} title={title} />
+      
       <MainDrawer>
-        <MenusDrawer refetch={refetch} />
+        <MenusDrawer id={serviceId} refetch={refetch} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -60,7 +66,12 @@ const Menus = () => {
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
-          <MenusTable menusData={filteredData} isLoading={isLoading} />
+          <MenusTable 
+            menusData={filteredData} 
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+            handleModalOpen={handleModalOpen}
+          />
         </Table>
       </TableContainer>
     </>

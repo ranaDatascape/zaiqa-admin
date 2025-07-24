@@ -29,9 +29,9 @@ const PackagesTable = ({ PackagesData = [], isLoading }) => {
             {packages.price}
           </TableCell>
 
-          <TableCell className="font-semibold uppercase text-xs">
+          {/* <TableCell className="font-semibold uppercase text-xs">
             <EditDeleteButton id={packages.id} />
-          </TableCell>
+          </TableCell> */}
         </TableRow>
       ))}
     </TableBody>

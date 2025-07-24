@@ -1,13 +1,13 @@
 // vite.config.js
-import react from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/@vitejs/plugin-react/dist/index.mjs";
-import { defineConfig } from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/vite/dist/node/index.js";
-import cssInjectedByJsPlugin from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/vite-plugin-css-injected-by-js/dist/esm/index.js";
-import { VitePWA } from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/vite-plugin-pwa/dist/index.js";
-import compression from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/vite-plugin-compression2/dist/index.mjs";
-import { visualizer } from "file:///D:/Datascape/codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution/kachabazar/admin/node_modules/rollup-plugin-visualizer/dist/plugin/index.js";
+import react from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/@vitejs/plugin-react/dist/index.mjs";
+import { defineConfig } from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/vite/dist/node/index.js";
+import cssInjectedByJsPlugin from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/vite-plugin-css-injected-by-js/dist/esm/index.js";
+import { VitePWA } from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/vite-plugin-pwa/dist/index.js";
+import compression from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/vite-plugin-compression2/dist/index.mjs";
+import { visualizer } from "file:///D:/Datascape/codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution/Zaiqa/admin/node_modules/rollup-plugin-visualizer/dist/plugin/index.js";
 import dns from "dns";
 import path from "path";
-var __vite_injected_original_dirname = "D:\\Datascape\\codecanyon-sIoDBO7b-kachabazar-react-next-js-ecommerce-solution\\kachabazar\\admin";
+var __vite_injected_original_dirname = "D:\\Datascape\\codecanyon-sIoDBO7b-Zaiqa-react-next-js-ecommerce-solution\\Zaiqa\\admin";
 dns.setDefaultResultOrder("verbatim");
 var vite_config_default = defineConfig({
   // root: "./", // Set the root directory of your project
@@ -56,9 +56,9 @@ var vite_config_default = defineConfig({
         scope: ".",
         start_url: ".",
         id: ".",
-        short_name: "Kachabazar - E-Commerce Website",
-        name: "Kachabazar | React eCommerce Admin Dashboard",
-        description: "Kachabazar : React Grocery & Organic Food Store e-commerce Admin Dashboard",
+        short_name: "Zaiqa - E-Commerce Website",
+        name: "Zaiqa | React eCommerce Admin Dashboard",
+        description: "Zaiqa : React Grocery & Organic Food Store e-commerce Admin Dashboard",
         icons: [
           {
             src: "favicon.ico",
