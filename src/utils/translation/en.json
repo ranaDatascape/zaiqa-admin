@@ -262,6 +262,7 @@
   "OrderStatus": "Status",
   "PageOrderDelivered": "Delivered",
   "PageOrderPending": "Pending",
+  "PageOrderOnTheWay" : "OnTheWay",
   "PageOrderProcessing": "Processing",
   "OrderCancel": "Cancel",
   "Orderlimits": "Order limits",
