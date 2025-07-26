@@ -172,19 +172,7 @@ const Header = () => {
           <ul className="flex justify-end items-center flex-shrink-0 space-x-6">
             <li className="changeLanguage">
               <div className="dropdown">
-                <button className="dropbtn focus:outline-none flex">
-                  <div
-                    className={`text-sm flag ${currLang?.flag?.toLowerCase()}`}
-                  ></div>{" "}
-                  <span className="md:inline-block hidden text-gray-900 dark:text-gray-300">
-                    {/* {currentLanguageCode === "de" ? "GERMAN" : "ENGLISH"} */}
-                    {currLang?.name}
-                  </span>
-                  <span className="md:hidden uppercase">
-                    {/* {currentLanguageCode === "de" ? "DE" : "EN"} */}
-                    {currLang?.iso_code}
-                  </span>
-                </button>
+                
 
                 <SelectLanguage handleLanguageChange={handleLanguageChange} />
               </div>

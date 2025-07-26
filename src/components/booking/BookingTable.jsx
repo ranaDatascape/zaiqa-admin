@@ -4,10 +4,11 @@ import EditDeleteButton from "../table/EditDeleteButton";
 import { FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 
 const BookingTable = ({ BookingList = [], isLoading, refetch }) => {
   console.log("Booking List", BookingList);
-
+  const axiosPublic = useAxiosPublic();
    // Handle delete
    const handleDelete = async (id) => {
     // Show confirmation dialog
